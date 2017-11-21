@@ -1,0 +1,10 @@
+.\output\obj\hashset.o: src\collect\hashset.c
+.\output\obj\hashset.o: .\src\collect\include\hashset.h
+.\output\obj\hashset.o: .\src\collect\include\common.h
+.\output\obj\hashset.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdlib.h
+.\output\obj\hashset.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdint.h
+.\output\obj\hashset.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdbool.h
+.\output\obj\hashset.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\string.h
+.\output\obj\hashset.o: .\src\mem\lib_mem.h
+.\output\obj\hashset.o: .\src\collect\include\hashtable.h
+.\output\obj\hashset.o: .\src\collect\include\array.h
