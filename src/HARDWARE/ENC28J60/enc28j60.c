@@ -126,29 +126,38 @@ void ENC28J60_SPI2_Init(void)
 
 }
 
-//u8 s_eir = 0;
-//u8 s_eir2 = 0;
+
+u8 s_eir2 = 0;
 void EXTI9_5_IRQHandler(void)
 {
-/*
+	u8 reg = 0;
 #if OS_CRITICAL_METHOD == 3                               
     OS_CPU_SR  cpu_sr = 0;
 #endif
     OS_ENTER_CRITICAL();
 	OSIntEnter();
 	OS_EXIT_CRITICAL();
-	*/
+	
 	if(EXTI_GetITStatus(EXTI_Line7))	
 	{	
 		EXTI_ClearITPendingBit(EXTI_Line7);
 		
 		OSSemPost(sem_enc28j60input);
-		//s_eir = ENC28J60_Read(EIR);
+		
+		
 		ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_PKTIF | EIR_TXIF);
-		//s_eir2 = ENC28J60_Read(EIR);
+
+
+		reg = ENC28J60_Read(EIR);
+		if(reg & EIR_RXERIF)
+		{
+			ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, EIE, EIE_INTIE | EIE_RXERIE);
+		}
+		
+		s_eir2 = ENC28J60_Read(EIR);
 	}
 
-	//OSIntExit();
+	OSIntExit();
 }
 
 void ENC28J60_Reset(void)
@@ -172,8 +181,11 @@ u8 ENC28J60_Read_Op(u8 op,u8 addr)
     dat=op|(addr&ADDR_MASK);
     SPI2_ReadWriteByte(dat);
     dat=SPI2_ReadWriteByte(0xFF);
+	
     //如果是读取MAC/MII寄存器,则第二次读到的数据才是正确的,见手册29页
-    if(addr&0x80)dat=SPI2_ReadWriteByte(0xFF);
+    if(addr&0x80)
+		dat=SPI2_ReadWriteByte(0xFF);
+	
     ENC28J60_CS=1;
     return dat;
 }
@@ -238,6 +250,7 @@ void ENC28J60_Set_Bank(u8 bank)
 u8 ENC28J60_Read(u8 addr)
 {
     ENC28J60_Set_Bank(addr);//设置BANK
+    
     return ENC28J60_Read_Op(ENC28J60_READ_CTRL_REG,addr);
 }
 //向ENC28J60指定寄存器写数据
@@ -459,7 +472,7 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
 {
 	u8 err = OS_ERR_NONE;	
 	
-	//OSSemPend(sem_enc28j60lock, 0, &err);
+	OSSemPend(sem_enc28j60lock, 0, &err);
 	if(err == OS_ERR_NONE)
 	{
 	    //设置发送缓冲区地址写指针入口
@@ -479,7 +492,7 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
 	    if((ENC28J60_Read(EIR)&EIR_TXERIF))
 	        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR,ECON1,ECON1_TXRTS);
 
-		//OSSemPost(sem_enc28j60lock);
+		OSSemPost(sem_enc28j60lock);
 	}
 }
 //从网络获取一个数据包内容
@@ -492,11 +505,15 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
     u32 len;
 	u8 err = OS_ERR_NONE;	
 	
-	//OSSemPend(sem_enc28j60lock, 0, &err);
+	OSSemPend(sem_enc28j60lock, 0, &err);
 	if(err == OS_ERR_NONE)
 	{
 		if(ENC28J60_Read(EPKTCNT)==0)						//是否收到数据包
+		{
+			s_eir2 = ENC28J60_Read(EIR);
+			OSSemPost(sem_enc28j60lock);
 			return 0;  					
+		}
 			
 		ENC28J60_Write(ERDPTL,(NextPacketPtr));				//设置接收缓冲器读指针
 		ENC28J60_Write(ERDPTH,(NextPacketPtr)>>8);
@@ -530,7 +547,7 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
 		//递减数据包计数器标志我们已经得到了这个包
 		ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON2,ECON2_PKTDEC);
 
-		//OSSemPost(sem_enc28j60lock);
+		OSSemPost(sem_enc28j60lock);
 	}
     return(len);
 }

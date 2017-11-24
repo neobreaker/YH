@@ -147,6 +147,7 @@ static struct pbuf * low_level_input(struct netif *netif)
     return p;
 }
 
+u32 pkt_cnt = 0;
 err_t ethernetif_input(struct netif *netif)
 {
     INT8U _err;
@@ -154,14 +155,16 @@ err_t ethernetif_input(struct netif *netif)
     struct pbuf *p;
     while(1)
     {
-        OSSemPend(sem_enc28j60input, 0, &_err);     //请求信号量
-        if(_err == OS_ERR_NONE)
+        OSSemPend(sem_enc28j60input, 100, &_err);     //请求信号量
+        //if(_err == OS_ERR_NONE)
         {
+			pkt_cnt = 0;
             while(1)
-            {
+            { 
                 p = low_level_input(netif);   //调用low_level_input函数接收数据
                 if(p != NULL)
                 {
+					pkt_cnt++;
                     err = netif->input(p, netif); //调用netif结构体中的input字段(一个函数)来处理数据包
                     if(err != ERR_OK)
                     {
