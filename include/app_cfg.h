@@ -3,8 +3,9 @@
 
 /* task priority */
 #define STARTUP_TASK_PRIO                      4
-#define TASK1_PRIO                             5
-#define TASK2_PRIO                             6
+
+#define TASK1_PRIO                             15
+#define TASK2_PRIO                             16
 
 /* task stack size */
 #define STARTUP_TASK_STK_SIZE                  80

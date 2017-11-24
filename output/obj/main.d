@@ -41,3 +41,7 @@
 .\output\obj\main.o: .\src\collect\include\array.h
 .\output\obj\main.o: .\src\collect\include\common.h
 .\output\obj\main.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdbool.h
+.\output\obj\main.o: .\src\LWIP\lwip_app\lwip_comm\lwip_comm.h
+.\output\obj\main.o: .\src\HARDWARE\ENC28J60\enc28j60.h
+.\output\obj\main.o: .\src\SYSTEM\sys\mysys.h
+.\output\obj\main.o: .\src\SYSTEM\delay\delay.h
