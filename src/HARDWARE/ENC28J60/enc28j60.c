@@ -92,7 +92,7 @@ void ENC28J60_SPI2_Init(void)
     GPIO_Init(GPIOB, &GPIO_InitStructure);						//初始化GPIOB
 
     GPIO_SetBits(GPIOB,GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);  	//PB13/14/15上拉
-
+/*
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;					// PG7 INT
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -110,7 +110,7 @@ void ENC28J60_SPI2_Init(void)
   	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x03;		
   	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;				
   	NVIC_Init(&NVIC_InitStructure);
-
+*/
     SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;  //设置SPI单向或者双向的数据模式:SPI设置为双线双向全双工
     SPI_InitStructure.SPI_Mode = SPI_Mode_Master;       //设置SPI工作模式:设置为主SPI
     SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;       //设置SPI的数据大小:SPI发送接收8位帧结构
@@ -126,8 +126,6 @@ void ENC28J60_SPI2_Init(void)
 
 }
 
-
-u8 s_eir2 = 0;
 void EXTI9_5_IRQHandler(void)
 {
 	u8 reg = 0;
@@ -144,17 +142,8 @@ void EXTI9_5_IRQHandler(void)
 		
 		OSSemPost(sem_enc28j60input);
 		
-		
-		ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_PKTIF | EIR_TXIF);
+		ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_PKTIF| EIR_TXIF);
 
-
-		reg = ENC28J60_Read(EIR);
-		if(reg & EIR_RXERIF)
-		{
-			ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, EIE, EIE_INTIE | EIE_RXERIE);
-		}
-		
-		s_eir2 = ENC28J60_Read(EIR);
 	}
 
 	OSIntExit();
@@ -444,7 +433,9 @@ u8 ENC28J60_Init(u8* macaddr)
     //bit 6 PKTIE： 接收数据包待处理中断允许位
     //1 = 允许接收数据包待处理中断
     //0 = 禁止接收数据包待处理中断
-    ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,EIE,EIE_INTIE|EIE_PKTIE);
+    //ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,EIE,EIE_INTIE|EIE_PKTIE | EIE_RXERIE);
+    ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR,EIE,EIE_INTIE|EIE_PKTIE | EIE_RXERIE);
+    
     // enable packet reception
     //bit 2 RXEN：接收使能位
     //1 = 通过当前过滤器的数据包将被写入接收缓冲器
@@ -504,13 +495,34 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
     u32 rxstat;
     u32 len;
 	u8 err = OS_ERR_NONE;	
-	
+	u8 reg = 0;
 	OSSemPend(sem_enc28j60lock, 0, &err);
 	if(err == OS_ERR_NONE)
 	{
-		if(ENC28J60_Read(EPKTCNT)==0)						//是否收到数据包
+		reg = ENC28J60_Read(EPKTCNT);
+		if(reg == 0)						//是否收到数据包
 		{
-			s_eir2 = ENC28J60_Read(EIR);
+			/*
+			reg = ENC28J60_Read(EIE);
+			reg = ENC28J60_Read(ESTAT);
+			reg = ENC28J60_Read(ECON1);
+			reg = ENC28J60_Read(ECON2);
+
+
+			reg = ENC28J60_Read(ERDPTL);
+			reg = ENC28J60_Read(ERDPTH);
+			reg = ENC28J60_Read(ERXSTL);
+			reg = ENC28J60_Read(ERXSTH);
+			reg = ENC28J60_Read(ERXNDL);
+			reg = ENC28J60_Read(ERXNDH);
+			
+			reg = ENC28J60_Read(EIR);
+			if(reg & EIR_RXERIF)
+			{
+				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_RXERIF);
+				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, EIE, EIE_INTIE | EIE_RXERIE);
+			}
+			*/
 			OSSemPost(sem_enc28j60lock);
 			return 0;  					
 		}
