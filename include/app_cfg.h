@@ -4,13 +4,13 @@
 /* task priority */
 #define STARTUP_TASK_PRIO                      4
 
-#define TASK1_PRIO                             15
-#define TASK2_PRIO                             16
+#define TASK_TCPSERVER_PRIO                    15
+#define TASK_UDPSERVER_PRIO                    16
 
 /* task stack size */
 #define STARTUP_TASK_STK_SIZE                  80
-#define TASK1_STK_SIZE                         128
-#define TASK2_STK_SIZE                         128
+#define TASK_TCPSERVER_STK_SIZE         	   256
+#define TASK_UDPSERVER_STK_SIZE         	   256
 
 /* interrupt priority */
 

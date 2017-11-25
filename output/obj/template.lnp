@@ -44,6 +44,8 @@
 ".\output\obj\os_dbg.o"
 ".\output\obj\os_cpu_a.o"
 ".\output\obj\task_startup.o"
+".\output\obj\task_tcpserver.o"
+".\output\obj\task_udpserver.o"
 ".\output\obj\lib_mem.o"
 ".\output\obj\array.o"
 ".\output\obj\common.o"

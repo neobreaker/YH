@@ -462,10 +462,22 @@ u8 ENC28J60_Get_EREVID(void)
 void ENC28J60_Packet_Send(u32 len,u8* packet)
 {
 	u8 err = OS_ERR_NONE;	
+	u16 retry = 0;
+	
 	
 	OSSemPend(sem_enc28j60lock, 0, &err);
 	if(err == OS_ERR_NONE)
 	{
+		if(ENC28J60_Read(EIR)&EIR_TXIF == 0)
+		{
+			retry++;
+			if(retry > 200)
+			{
+				OSSemPost(sem_enc28j60lock);
+				return ;
+			}
+		}
+		
 	    //设置发送缓冲区地址写指针入口
 	    ENC28J60_Write(EWRPTL,TXSTART_INIT&0xFF);
 	    ENC28J60_Write(EWRPTH,TXSTART_INIT>>8);
@@ -473,6 +485,9 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
 	    ENC28J60_Write(ETXNDL,(TXSTART_INIT+len)&0xFF);
 	    ENC28J60_Write(ETXNDH,(TXSTART_INIT+len)>>8);
 	    //写每包控制字节（0x00表示使用macon3的设置）
+
+		ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_TXIF);
+		
 	    ENC28J60_Write_Op(ENC28J60_WRITE_BUF_MEM,0,0x00);
 	    //复制数据包到发送缓冲区
 
