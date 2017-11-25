@@ -456,6 +456,9 @@ u8 ENC28J60_Get_EREVID(void)
     return ENC28J60_Read(EREVID);
 }
 
+static u8 eir = 0;
+static u8 estat = 0;
+static u8 econ1 = 0;
 //通过ENC28J60发送数据包到网络
 //len:数据包大小
 //packet:数据包
@@ -464,11 +467,10 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
 	u8 err = OS_ERR_NONE;	
 	u16 retry = 0;
 	
-	
 	OSSemPend(sem_enc28j60lock, 0, &err);
 	if(err == OS_ERR_NONE)
 	{
-		if(ENC28J60_Read(EIR)&EIR_TXIF == 0)
+		while(ENC28J60_Read(ECON1)&ECON1_TXRTS)
 		{
 			retry++;
 			if(retry > 200)
@@ -496,7 +498,20 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
 	    ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON1,ECON1_TXRTS);
 	    //复位发送逻辑的问题。参见Rev. B4 Silicon Errata point 12.
 	    if((ENC28J60_Read(EIR)&EIR_TXERIF))
+	    {
 	        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR,ECON1,ECON1_TXRTS);
+
+			estat = ENC28J60_Read(ESTAT);
+			eir = ENC28J60_Read(EIR);
+			econ1 = ENC28J60_Read(ECON1);
+	    }
+		else
+		{
+			estat = ENC28J60_Read(ESTAT);
+			eir = ENC28J60_Read(EIR);
+			econ1 = ENC28J60_Read(ECON1);
+
+		}
 
 		OSSemPost(sem_enc28j60lock);
 	}
@@ -517,27 +532,16 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
 		reg = ENC28J60_Read(EPKTCNT);
 		if(reg == 0)						//是否收到数据包
 		{
-			/*
-			reg = ENC28J60_Read(EIE);
-			reg = ENC28J60_Read(ESTAT);
-			reg = ENC28J60_Read(ECON1);
-			reg = ENC28J60_Read(ECON2);
-
-
-			reg = ENC28J60_Read(ERDPTL);
-			reg = ENC28J60_Read(ERDPTH);
-			reg = ENC28J60_Read(ERXSTL);
-			reg = ENC28J60_Read(ERXSTH);
-			reg = ENC28J60_Read(ERXNDL);
-			reg = ENC28J60_Read(ERXNDH);
+			estat = ENC28J60_Read(ESTAT);
+			eir = ENC28J60_Read(EIR);
+			econ1 = ENC28J60_Read(ECON1);
 			
-			reg = ENC28J60_Read(EIR);
-			if(reg & EIR_RXERIF)
+			if(eir & EIR_RXERIF)
 			{
 				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_RXERIF);
 				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, EIE, EIE_INTIE | EIE_RXERIE);
 			}
-			*/
+			
 			OSSemPost(sem_enc28j60lock);
 			return 0;  					
 		}
