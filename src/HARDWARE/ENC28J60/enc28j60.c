@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "enc28j60.h"
 #include "delay.h"
-#include "ccdebug.h"
 
 //////////////////////////////////////////////////////////////////////////////////
 //ALIENTEK战舰STM32开发板
@@ -480,8 +479,6 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
 				return ;
 			}
 		}
-
-		//CC_DEBUGF(CC_DBG_ON | CC_DBG_LEVEL_WARNING, "s\n");
 		
 	    //设置发送缓冲区地址写指针入口
 	    ENC28J60_Write(EWRPTL,TXSTART_INIT&0xFF);
@@ -543,11 +540,6 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
 			{
 				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_RXERIF);
 				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, EIE, EIE_INTIE | EIE_RXERIE);
-			}
-
-			if(!(econ1 & ECON1_RXEN))
-			{
-			    ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON1,ECON1_RXEN);
 			}
 			
 			OSSemPost(sem_enc28j60lock);
