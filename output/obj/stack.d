@@ -1,9 +1,0 @@
-.\output\obj\stack.o: src\collect\stack.c
-.\output\obj\stack.o: .\src\collect\include\array.h
-.\output\obj\stack.o: .\src\collect\include\common.h
-.\output\obj\stack.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdlib.h
-.\output\obj\stack.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdint.h
-.\output\obj\stack.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdbool.h
-.\output\obj\stack.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\string.h
-.\output\obj\stack.o: .\src\mem\lib_mem.h
-.\output\obj\stack.o: .\src\collect\include\stack.h

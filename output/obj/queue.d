@@ -1,9 +1,0 @@
-.\output\obj\queue.o: src\collect\queue.c
-.\output\obj\queue.o: .\src\collect\include\queue.h
-.\output\obj\queue.o: .\src\collect\include\common.h
-.\output\obj\queue.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdlib.h
-.\output\obj\queue.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdint.h
-.\output\obj\queue.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\stdbool.h
-.\output\obj\queue.o: d:\Keil_v4\ARM\ARMCC\bin\..\include\string.h
-.\output\obj\queue.o: .\src\mem\lib_mem.h
-.\output\obj\queue.o: .\src\collect\include\deque.h
