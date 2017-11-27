@@ -11,7 +11,6 @@
 
 static OS_STK startup_task_stk[STARTUP_TASK_STK_SIZE];
 
-
 void bsp_init()
 {
 	NVIC_Configuration();
@@ -35,6 +34,7 @@ int main(void)
 	             STARTUP_TASK_PRIO);
 	OSStart();
 	
-	CC_DEBUGF(CC_DBG_ON | CC_DBG_LEVEL_WARNING, "system shutdonwn\n");
+	CC_DEBUGF(CC_DBG_ON | CC_DBG_LEVEL_WARNING, "system shutdonwn\n");		/* should never run here! */
+	
 	return 0;
 }

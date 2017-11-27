@@ -48,7 +48,7 @@
 #define OS_SCHED_LOCK_EN          1    /* Include code for OSSchedLock() and OSSchedUnlock()           */
 
 #define OS_TICK_STEP_EN           0    /* Enable tick stepping feature for uC/OS-View                  */
-#define OS_TICKS_PER_SEC		 1000    /* Set the number of ticks in one second                        */
+#define OS_TICKS_PER_SEC		 200    /* Set the number of ticks in one second                        */
 
 
                                        /* --------------------- TASK STACK SIZE ---------------------- */
@@ -126,7 +126,7 @@
 
 
                                        /* --------------------- TIME MANAGEMENT ---------------------- */
-#define OS_TIME_DLY_HMSM_EN       0    /*     Include code for OSTimeDlyHMSM()                         */
+#define OS_TIME_DLY_HMSM_EN       1    /*     Include code for OSTimeDlyHMSM()                         */
 #define OS_TIME_DLY_RESUME_EN     0    /*     Include code for OSTimeDlyResume()                       */
 #define OS_TIME_GET_SET_EN        1    /*     Include code for OSTimeGet() and OSTimeSet()             */
 #define OS_TIME_TICK_HOOK_EN      0    /*     Include code for OSTimeTickHook()                        */

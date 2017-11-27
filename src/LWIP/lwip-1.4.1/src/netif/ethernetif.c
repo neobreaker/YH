@@ -154,7 +154,7 @@ err_t ethernetif_input(struct netif *netif)
     struct pbuf *p;
     while(1)
     {
-        OSSemPend(sem_enc28j60input, 20, &_err);     //请求信号量
+        OSSemPend(sem_enc28j60input, 4, &_err);     //请求信号量		4*5ms timeout
         //if(_err == OS_ERR_NONE)
         {
             while(1)
