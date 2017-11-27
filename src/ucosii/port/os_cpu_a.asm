@@ -5,11 +5,12 @@
 ;                               (c) Copyright 1992-2006, Micrium, Weston, FL
 ;                                          All Rights Reserved
 ;
-;                                           Generic ARM Port
+;                                           ARM Cortex-M3 Port
 ;
 ; File      : OS_CPU_A.ASM
-; Version   : V2.86
+; Version   : V2.89
 ; By        : Jean J. Labrosse
+;             Brian Nagel
 ;
 ; For       : ARMv7M Cortex-M3
 ; Mode      : Thumb2
@@ -28,9 +29,9 @@
     EXTERN  OSPrioHighRdy
     EXTERN  OSTCBCur
     EXTERN  OSTCBHighRdy
-    EXTERN  OSIntNesting
     EXTERN  OSIntExit
     EXTERN  OSTaskSwHook
+	EXTERN  OS_CPU_ExceptStkBase
 
 
     EXPORT  OS_CPU_SR_Save                                      ; Functions declared in this file
@@ -109,9 +110,10 @@ OS_CPU_SR_Restore
 ;           2) OSStartHighRdy() MUST:
 ;              a) Setup PendSV exception priority to lowest;
 ;              b) Set initial PSP to 0, to tell context switcher this is first run;
-;              c) Set OSRunning to TRUE;
-;              d) Trigger PendSV exception;
-;              e) Enable interrupts (tasks will run with interrupts enabled).
+;              c) Set the main stack to OS_CPU_ExceptStkBase;
+;              d) Set OSRunning to TRUE;
+;              e) Trigger PendSV exception;
+;              f) Enable interrupts (tasks will run with interrupts enabled).
 ;********************************************************************************************************
 
 OSStartHighRdy
@@ -121,6 +123,10 @@ OSStartHighRdy
 
     MOVS    R0, #0                                              ; Set the PSP to 0 for initial context switch call
     MSR     PSP, R0
+
+    LDR     R0, =OS_CPU_ExceptStkBase                           ; Initialize the MSP to the OS_CPU_ExceptStkBase
+    LDR     R1, [R0]
+    MSR     MSP, R1    
 
     LDR     R0, =OSRunning                                      ; OSRunning = TRUE
     MOVS    R1, #1
