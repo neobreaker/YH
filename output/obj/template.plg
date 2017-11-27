@@ -4,9 +4,13 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 E:\github\YH\template.uvproj
-Project File Date:  11/25/2017
+Project File Date:  11/27/2017
 
 <h2>Output:</h2>
+Build target 'template'
+linking...
+Program Size: Code=80032 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
 Load "E:\\github\\YH\\output\\obj\\template.axf" 
 Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
 * JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
@@ -34,7 +38,497 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F103ZE
-VTarget = 2.814V
+VTarget = 2.950V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+linking...
+Program Size: Code=80032 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Build target 'template'
+compiling main.c...
+linking...
+Program Size: Code=80032 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.931V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+linking...
+Program Size: Code=80032 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.937V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+linking...
+Program Size: Code=80032 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Rebuild target 'template'
+compiling stm32f10x_wwdg.c...
+compiling misc.c...
+compiling stm32f10x_adc.c...
+compiling stm32f10x_bkp.c...
+compiling stm32f10x_can.c...
+compiling stm32f10x_cec.c...
+compiling stm32f10x_crc.c...
+compiling stm32f10x_dac.c...
+compiling stm32f10x_dbgmcu.c...
+compiling stm32f10x_dma.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_fsmc.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_i2c.c...
+compiling stm32f10x_iwdg.c...
+compiling stm32f10x_pwr.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_rtc.c...
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_spi.c...
+compiling stm32f10x_tim.c...
+compiling stm32f10x_usart.c...
+compiling core_cm3.c...
+compiling system_stm32f10x.c...
+assembling startup_stm32f10x_hd.s...
+compiling main.c...
+compiling stm32f10x_it.c...
+compiling sram.c...
+compiling enc28j60.c...
+src\HARDWARE\ENC28J60\enc28j60.c(66): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(131): warning:  #177-D: variable "reg" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(460): warning:  #550-D: variable "estat" was set but never used
+compiling timerx.c...
+compiling debug_usart.c...
+compiling os_core.c...
+compiling os_flag.c...
+compiling os_mbox.c...
+compiling os_mem.c...
+compiling os_mutex.c...
+compiling os_q.c...
+compiling os_sem.c...
+compiling os_task.c...
+compiling os_time.c...
+compiling os_tmr.c...
+compiling os_cpu_c.c...
+compiling os_dbg.c...
+assembling os_cpu_a.asm...
+compiling task_startup.c...
+src\task\task_startup.c(28): warning:  #223-D: function "lwip_comm_init" declared implicitly
+src\task\task_startup.c(5): warning:  #177-D: variable "task_tcpserver_stk" was declared but never referenced
+compiling task_tcpserver.c...
+src\task\task_tcpserver.c(23): warning:  #550-D: variable "length" was set but never used
+compiling task_udpserver.c...
+src\task\task_udpserver.c(10): warning:  #550-D: variable "time_elapse" was set but never used
+compiling lib_mem.c...
+compiling array.c...
+compiling common.c...
+compiling deque.c...
+compiling hashset.c...
+compiling hashtable.c...
+compiling list.c...
+compiling queue.c...
+compiling slist.c...
+compiling stack.c...
+compiling treeset.c...
+compiling treetable.c...
+compiling mysys.c...
+compiling delay.c...
+compiling lwip_comm.c...
+compiling fs.c...
+compiling httpd.c...
+compiling httpd_cgi_ssi.c...
+src\LWIP\lwip_app\web_server_demo\httpd_cgi_ssi.c(53): warning:  #177-D: function "FindCGIParameter" was declared but never referenced
+compiling etharp.c...
+compiling ethernetif.c...
+compiling def.c...
+compiling dhcp.c...
+compiling dns.c...
+compiling init.c...
+compiling mem.c...
+compiling memp.c...
+compiling netif.c...
+compiling pbuf.c...
+compiling raw.c...
+compiling stats.c...
+compiling tcp.c...
+compiling tcp_in.c...
+compiling tcp_out.c...
+compiling timers.c...
+compiling udp.c...
+compiling autoip.c...
+compiling icmp.c...
+compiling igmp.c...
+compiling inet.c...
+compiling inet_chksum.c...
+compiling ip.c...
+compiling ip_addr.c...
+compiling ip_frag.c...
+compiling sys_arch.c...
+compiling api_lib.c...
+compiling api_msg.c...
+compiling err.c...
+compiling netbuf.c...
+compiling netdb.c...
+compiling netifapi.c...
+compiling sockets.c...
+compiling tcpip.c...
+compiling ccdebug_port.c...
+linking...
+Program Size: Code=80032 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 9 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.937V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+compiling main.c...
+src\init\main.c(30): error:  #20: identifier "TRUE" is undefined
+".\output\obj\template.axf" - 1 Errors, 0 Warning(s).
+Target not created
+Build target 'template'
+compiling main.c...
+linking...
+Program Size: Code=80036 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.944V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+compiling main.c...
+.\src\ccdebug\inlcude\ccdebug_core.h(69): warning:  #47-D: incompatible redefinition of macro "CC_DEBUGF" (declared at line 51)
+linking...
+Program Size: Code=80032 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 1 Warning(s).
+Build target 'template'
+compiling main.c...
+src\init\main.c(29): error:  #20: identifier "s16_t" is undefined
+src\init\main.c(29): warning:  #174-D: expression has no effect
+src\init\main.c(29): error:  #65: expected a ";"
+".\output\obj\template.axf" - 2 Errors, 1 Warning(s).
+Target not created
+Build target 'template'
+compiling main.c...
+src\init\main.c(29): warning:  #174-D: expression has no effect
+src\init\main.c(29): error:  #65: expected a ";"
+".\output\obj\template.axf" - 1 Errors, 1 Warning(s).
+Target not created
+Build target 'template'
+compiling main.c...
+src\init\main.c(29): warning:  #174-D: expression has no effect
+src\init\main.c(29): error:  #65: expected a ";"
+".\output\obj\template.axf" - 1 Errors, 1 Warning(s).
+Target not created
+Build target 'template'
+compiling main.c...
+src\init\main.c(29): warning:  #174-D: expression has no effect
+src\init\main.c(29): error:  #65: expected a ";"
+compiling ccdebug_port.c...
+".\output\obj\template.axf" - 1 Errors, 1 Warning(s).
+Target not created
+Build target 'template'
+compiling main.c...
+src\init\main.c(29): warning:  #174-D: expression has no effect
+src\init\main.c(29): error:  #65: expected a ";"
+".\output\obj\template.axf" - 1 Errors, 1 Warning(s).
+Target not created
+Build target 'template'
+compiling main.c...
+src\init\main.c(29): warning:  #174-D: expression has no effect
+src\init\main.c(29): error:  #65: expected a ";"
+compiling ccdebug_port.c...
+".\output\obj\template.axf" - 1 Errors, 1 Warning(s).
+Target not created
+Build target 'template'
+compiling main.c...
+src\init\main.c(37): error: At end of source:  #67: expected a "}"
+src\init\main.c(37): error: At end of source:  #112: expected "while"
+src\init\main.c(37): error: At end of source:  #125: expected a "("
+src\init\main.c(37): error: At end of source:  #29: expected an expression
+src\init\main.c(37): error: At end of source:  #18: expected a ")"
+src\init\main.c(37): error: At end of source:  #65: expected a ";"
+src\init\main.c(37): error: At end of source:  #67: expected a "}"
+".\output\obj\template.axf" - 7 Errors, 0 Warning(s).
+Target not created
+Build target 'template'
+compiling main.c...
+linking...
+Program Size: Code=80036 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Build target 'template'
+compiling main.c...
+compiling ccdebug_port.c...
+linking...
+Program Size: Code=80060 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.944V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+compiling main.c...
+linking...
+Program Size: Code=80064 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.944V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+compiling main.c...
+linking...
+Program Size: Code=80064 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Build target 'template'
+compiling main.c...
+compiling lwip_comm.c...
+linking...
+Program Size: Code=80148 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.924V
 State of Pins: 
 TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
@@ -50,9 +544,22 @@ compiling enc28j60.c...
 src\HARDWARE\ENC28J60\enc28j60.c(66): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
 src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
 src\HARDWARE\ENC28J60\enc28j60.c(131): warning:  #177-D: variable "reg" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(466): warning:  #550-D: variable "reg" was set but never used
+src\HARDWARE\ENC28J60\enc28j60.c(483): warning:  #223-D: function "CC_DEBUGF" declared implicitly
+src\HARDWARE\ENC28J60\enc28j60.c(483): error:  #20: identifier "CC_DBG_ON" is undefined
+src\HARDWARE\ENC28J60\enc28j60.c(483): error:  #20: identifier "CC_DBG_LEVEL_WARNING" is undefined
+src\HARDWARE\ENC28J60\enc28j60.c(460): warning:  #550-D: variable "estat" was set but never used
+".\output\obj\template.axf" - 2 Errors, 5 Warning(s).
+Target not created
+compiling os_core.c...
+"src\ucosii\src\os_core.c" - 0 Errors, 0 Warning(s).
+Build target 'template'
+compiling enc28j60.c...
+src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(68): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(132): warning:  #177-D: variable "reg" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "estat" was set but never used
 linking...
-Program Size: Code=82476 RO-data=1520 RW-data=388 ZI-data=1009588  
+Program Size: Code=80192 RO-data=1480 RW-data=388 ZI-data=1009588  
 ".\output\obj\template.axf" - 0 Errors, 4 Warning(s).
 Load "E:\\github\\YH\\output\\obj\\template.axf" 
 Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
@@ -81,7 +588,7 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F103ZE
-VTarget = 2.814V
+VTarget = 2.976V
 State of Pins: 
 TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
@@ -94,14 +601,13 @@ Programming Done.
 Verify OK.
 Build target 'template'
 compiling enc28j60.c...
-src\HARDWARE\ENC28J60\enc28j60.c(66): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(131): warning:  #177-D: variable "reg" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(459): warning:  #550-D: variable "eir" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(460): warning:  #550-D: variable "estat" was set but never used
+src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(68): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(132): warning:  #177-D: variable "reg" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "estat" was set but never used
 linking...
-Program Size: Code=82492 RO-data=1520 RW-data=388 ZI-data=1009588  
-".\output\obj\template.axf" - 0 Errors, 5 Warning(s).
+Program Size: Code=80148 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 4 Warning(s).
 Load "E:\\github\\YH\\output\\obj\\template.axf" 
 Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
 * JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
@@ -129,7 +635,7 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F103ZE
-VTarget = 2.795V
+VTarget = 2.982V
 State of Pins: 
 TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
@@ -142,27 +648,18 @@ Programming Done.
 Verify OK.
 Build target 'template'
 compiling enc28j60.c...
-src\HARDWARE\ENC28J60\enc28j60.c(66): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(131): warning:  #177-D: variable "reg" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(506): error:  #29: expected an expression
-src\HARDWARE\ENC28J60\enc28j60.c(512): error:  #29: expected an expression
-src\HARDWARE\ENC28J60\enc28j60.c(459): warning:  #550-D: variable "eir" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(460): warning:  #550-D: variable "estat" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "econ1" was set but never used
-".\output\obj\template.axf" - 2 Errors, 6 Warning(s).
-Target not created
-Build target 'template'
-compiling enc28j60.c...
-src\HARDWARE\ENC28J60\enc28j60.c(66): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(131): warning:  #177-D: variable "reg" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(459): warning:  #550-D: variable "eir" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(460): warning:  #550-D: variable "estat" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "econ1" was set but never used
+src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(68): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(132): warning:  #177-D: variable "reg" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "estat" was set but never used
+compiling ccdebug_port.c...
 linking...
-Program Size: Code=82516 RO-data=1520 RW-data=388 ZI-data=1009588  
-".\output\obj\template.axf" - 0 Errors, 6 Warning(s).
+Program Size: Code=80172 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 4 Warning(s).
+Build target 'template'
+linking...
+Program Size: Code=80172 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
 Load "E:\\github\\YH\\output\\obj\\template.axf" 
 Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
 * JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
@@ -190,153 +687,7 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F103ZE
-VTarget = 2.814V
-State of Pins: 
-TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'template'
-compiling enc28j60.c...
-src\HARDWARE\ENC28J60\enc28j60.c(66): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(131): warning:  #177-D: variable "reg" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(459): warning:  #550-D: variable "eir" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(460): warning:  #550-D: variable "estat" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "econ1" was set but never used
-linking...
-Program Size: Code=82520 RO-data=1520 RW-data=388 ZI-data=1009588  
-".\output\obj\template.axf" - 0 Errors, 6 Warning(s).
-Load "E:\\github\\YH\\output\\obj\\template.axf" 
-Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
-* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
- 
-JLink info:
-------------
-DLL: V4.56 , compiled Oct 22 2012 19:40:04
-Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
-Hardware: V8.00
-S/N : 17935099 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
-* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
-* JLink Info: Found Cortex-M3 r1p1, Little endian.
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found Cortex-M3 r1p1, Little endian.
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
- 
-Target info:
-------------
-Device: STM32F103ZE
-VTarget = 2.808V
-State of Pins: 
-TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'template'
-compiling enc28j60.c...
-src\HARDWARE\ENC28J60\enc28j60.c(66): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(131): warning:  #177-D: variable "reg" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(459): warning:  #550-D: variable "eir" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(460): warning:  #550-D: variable "estat" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "econ1" was set but never used
-linking...
-Program Size: Code=82520 RO-data=1520 RW-data=388 ZI-data=1009588  
-".\output\obj\template.axf" - 0 Errors, 6 Warning(s).
-Load "E:\\github\\YH\\output\\obj\\template.axf" 
-Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
-* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
- 
-JLink info:
-------------
-DLL: V4.56 , compiled Oct 22 2012 19:40:04
-Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
-Hardware: V8.00
-S/N : 17935099 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
-* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
-* JLink Info: Found Cortex-M3 r1p1, Little endian.
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found Cortex-M3 r1p1, Little endian.
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
- 
-Target info:
-------------
-Device: STM32F103ZE
-VTarget = 2.795V
-State of Pins: 
-TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 2000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'template'
-compiling enc28j60.c...
-src\HARDWARE\ENC28J60\enc28j60.c(66): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(131): warning:  #177-D: variable "reg" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(460): warning:  #550-D: variable "estat" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "econ1" was set but never used
-linking...
-Program Size: Code=82584 RO-data=1520 RW-data=388 ZI-data=1009588  
-".\output\obj\template.axf" - 0 Errors, 5 Warning(s).
-Load "E:\\github\\YH\\output\\obj\\template.axf" 
-Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
-* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
- 
-JLink info:
-------------
-DLL: V4.56 , compiled Oct 22 2012 19:40:04
-Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
-Hardware: V8.00
-S/N : 17935099 
-Feature(s) : RDI,FlashDL,FlashBP,JFlash 
- 
-* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
-* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
-* JLink Info: Found Cortex-M3 r1p1, Little endian.
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found Cortex-M3 r1p1, Little endian.
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
- 
-Target info:
-------------
-Device: STM32F103ZE
-VTarget = 2.814V
+VTarget = 2.976V
 State of Pins: 
 TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
@@ -349,20 +700,10 @@ Programming Done.
 Verify OK.
 Build target 'template'
 compiling main.c...
-compiling enc28j60.c...
-src\HARDWARE\ENC28J60\enc28j60.c(66): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(131): warning:  #177-D: variable "reg" was declared but never referenced
-src\HARDWARE\ENC28J60\enc28j60.c(460): warning:  #550-D: variable "estat" was set but never used
-src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "econ1" was set but never used
-compiling lwip_comm.c...
-compiling httpd.c...
-compiling httpd_cgi_ssi.c...
-src\LWIP\lwip_app\web_server_demo\httpd_cgi_ssi.c(53): warning:  #177-D: function "FindCGIParameter" was declared but never referenced
-compiling ethernetif.c...
+compiling ccdebug_port.c...
 linking...
-Program Size: Code=82584 RO-data=1520 RW-data=388 ZI-data=1009588  
-".\output\obj\template.axf" - 0 Errors, 6 Warning(s).
+Program Size: Code=80168 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
 Load "E:\\github\\YH\\output\\obj\\template.axf" 
 Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
 * JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
@@ -390,7 +731,7 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F103ZE
-VTarget = 2.808V
+VTarget = 2.982V
 State of Pins: 
 TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
@@ -401,3 +742,231 @@ JTAG speed: 2000 kHz
 Erase Done.
 Programming Done.
 Verify OK.
+Build target 'template'
+compiling enc28j60.c...
+src\HARDWARE\ENC28J60\enc28j60.c(67): warning:  #177-D: variable "EXTI_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(68): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(132): warning:  #177-D: variable "reg" was declared but never referenced
+src\HARDWARE\ENC28J60\enc28j60.c(461): warning:  #550-D: variable "estat" was set but never used
+linking...
+Program Size: Code=80144 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 4 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.970V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+compiling main.c...
+linking...
+Program Size: Code=80144 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Build target 'template'
+linking...
+Program Size: Code=80144 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.970V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+compiling ethernetif.c...
+linking...
+Program Size: Code=80144 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 3.002V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+compiling ethernetif.c...
+linking...
+Program Size: Code=80144 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.995V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+compiling main.c...
+linking...
+Program Size: Code=80152 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).
+Load "E:\\github\\YH\\output\\obj\\template.axf" 
+Set JLink Project File to "E:\github\YH\JLinkSettings.ini"
+* JLink Info: Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.56 , compiled Oct 22 2012 19:40:04
+Firmware: J-Link ARM V8 compiled Sep 20 2012 13:27:01
+Hardware: V8.00
+S/N : 17935099 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103ZE
+VTarget = 2.970V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 1, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 2000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'template'
+compiling main.c...
+linking...
+Program Size: Code=80152 RO-data=1480 RW-data=388 ZI-data=1009588  
+".\output\obj\template.axf" - 0 Errors, 0 Warning(s).

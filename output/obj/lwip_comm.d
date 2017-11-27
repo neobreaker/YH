@@ -76,3 +76,6 @@
 .\output\obj\lwip_comm.o: .\src\LWIP\lwip-1.4.1\src\include\lwip/netbuf.h
 .\output\obj\lwip_comm.o: .\src\LWIP\lwip-1.4.1\src\include\lwip/netifapi.h
 .\output\obj\lwip_comm.o: .\src\mem\lib_mem.h
+.\output\obj\lwip_comm.o: .\src\ccdebug\inlcude\ccdebug.h
+.\output\obj\lwip_comm.o: .\src\ccdebug\inlcude\ccdebug_core.h
+.\output\obj\lwip_comm.o: .\src\ccdebug\inlcude\ccdebug_port.h

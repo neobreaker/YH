@@ -45,3 +45,6 @@
 .\output\obj\main.o: .\src\HARDWARE\ENC28J60\enc28j60.h
 .\output\obj\main.o: .\src\SYSTEM\sys\mysys.h
 .\output\obj\main.o: .\src\SYSTEM\delay\delay.h
+.\output\obj\main.o: .\src\ccdebug\inlcude\ccdebug.h
+.\output\obj\main.o: .\src\ccdebug\inlcude\ccdebug_core.h
+.\output\obj\main.o: .\src\ccdebug\inlcude\ccdebug_port.h

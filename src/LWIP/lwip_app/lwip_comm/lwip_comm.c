@@ -10,10 +10,9 @@
 #include "lwip/ip_frag.h"
 #include "lwip/tcpip.h"
 #include "lib_mem.h"
-//#include "delay.h"
-//#include "usart.h"
 #include <stdio.h>
 #include "includes.h"
+#include "ccdebug.h"
 
 //////////////////////////////////////////////////////////////////////////////////
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -180,6 +179,8 @@ u8 lwip_comm_init(void)
     if(ENC28J60_Init(lwipdev.mac))
         return 2;                       //初始化 ENC28J60
 
+	CC_DEBUGF(CC_DBG_ON | CC_DBG_LEVEL_WARNING, "enc28j60 init success\n");
+	
     tcpip_init(NULL,NULL);              //初始化tcp ip内核,该函数里面会创建tcpip_thread内核任务
 
 #if LWIP_DHCP                           //使用动态IP

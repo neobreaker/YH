@@ -30,6 +30,7 @@
 ".\output\obj\sram.o"
 ".\output\obj\enc28j60.o"
 ".\output\obj\timerx.o"
+".\output\obj\debug_usart.o"
 ".\output\obj\os_core.o"
 ".\output\obj\os_flag.o"
 ".\output\obj\os_mbox.o"
@@ -98,6 +99,7 @@
 ".\output\obj\netifapi.o"
 ".\output\obj\sockets.o"
 ".\output\obj\tcpip.o"
+".\output\obj\ccdebug_port.o"
 --strict --scatter ".\output\obj\template.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

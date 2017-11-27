@@ -24,6 +24,9 @@ void startup_task(void *p_arg)
     OSStatInit();      /* Determine CPU capacity. */
 #endif
 	/* TODO: create application tasks here */
+
+	lwip_comm_init();
+	
 	/*
 	err = OSTaskCreate(task_tcpserver, (void *)0,
 	                   &task_tcpserver_stk[TASK_TCPSERVER_STK_SIZE-1], TASK_TCPSERVER_PRIO);      

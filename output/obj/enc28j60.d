@@ -36,3 +36,6 @@
 .\output\obj\enc28j60.o: .\include\os_cfg.h
 .\output\obj\enc28j60.o: .\src\ucosii\port\os_cpu.h
 .\output\obj\enc28j60.o: .\src\SYSTEM\delay\delay.h
+.\output\obj\enc28j60.o: .\src\ccdebug\inlcude\ccdebug.h
+.\output\obj\enc28j60.o: .\src\ccdebug\inlcude\ccdebug_core.h
+.\output\obj\enc28j60.o: .\src\ccdebug\inlcude\ccdebug_port.h
