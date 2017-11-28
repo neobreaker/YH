@@ -741,7 +741,7 @@ I (E:\github\YH\src\collect\include\array.h)(0x5A1B69F5)
 I (E:\github\YH\src\collect\include\common.h)(0x5A1B69F5)
 I (d:\Keil_v4\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
 I (E:\github\YH\src\LWIP\lwip_app\lwip_comm\lwip_comm.h)(0x5A1B69F5)
-I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1BD550)
+I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1CE2B7)
 I (E:\github\YH\src\SYSTEM\sys\mysys.h)(0x5A1B69F5)
 I (E:\github\YH\src\SYSTEM\delay\delay.h)(0x5A1B69F5)
 I (E:\github\YH\src\ccdebug\inlcude\ccdebug.h)(0x5A1B77E6)
@@ -811,9 +811,9 @@ I (E:\github\YH\src\libstm32\inc\stm32f10x_tim.h)(0x5A1B69F5)
 I (E:\github\YH\src\libstm32\inc\stm32f10x_usart.h)(0x5A1B69F5)
 I (E:\github\YH\src\libstm32\inc\stm32f10x_wwdg.h)(0x5A1B69F5)
 I (E:\github\YH\src\libstm32\inc\misc.h)(0x5A1B69F5)
-F (.\src\HARDWARE\ENC28J60\enc28j60.c)(0x5A1BDCC8)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\include -I.\src\ccdebug\inlcude -I.\src\libstm32\cmsis -I.\src\libstm32\inc -I.\src\ucosii\src -I.\src\ucosii\port -I.\src\task -I.\src\HARDWARE\SRAM -I.\src\HARDWARE\TIMER -I.\src\HARDWARE\ENC28J60 -I.\src\HARDWARE\USART -I.\src\mem -I.\src\collect\include -I.\src\SYSTEM -I.\src\SYSTEM\sys -I.\src\SYSTEM\delay -I.\src\LWIP -I.\src\LWIP\lwip-1.4.1\src\include -I.\src\LWIP\lwip-1.4.1\src\include\ipv4 -I.\src\LWIP\lwip-1.4.1\src\include\netif -I.\src\LWIP\lwip_app\lwip_comm -I.\src\LWIP\lwip_app\web_server_demo-I d:\Keil_v4\ARM\RV31\INC-I d:\Keil_v4\ARM\CMSIS\Include-I d:\Keil_v4\ARM\Inc\ST\STM32F10x-o .\output\obj\enc28j60.o --omf_browse .\output\obj\enc28j60.crf --depend .\output\obj\enc28j60.d)
+F (.\src\HARDWARE\ENC28J60\enc28j60.c)(0x5A1D09C9)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\include -I.\src\ccdebug\inlcude -I.\src\libstm32\cmsis -I.\src\libstm32\inc -I.\src\ucosii\src -I.\src\ucosii\port -I.\src\task -I.\src\HARDWARE\SRAM -I.\src\HARDWARE\TIMER -I.\src\HARDWARE\ENC28J60 -I.\src\HARDWARE\USART -I.\src\mem -I.\src\collect\include -I.\src\SYSTEM -I.\src\SYSTEM\sys -I.\src\SYSTEM\delay -I.\src\LWIP -I.\src\LWIP\lwip-1.4.1\src\include -I.\src\LWIP\lwip-1.4.1\src\include\ipv4 -I.\src\LWIP\lwip-1.4.1\src\include\netif -I.\src\LWIP\lwip_app\lwip_comm -I.\src\LWIP\lwip_app\web_server_demo-I d:\Keil_v4\ARM\RV31\INC-I d:\Keil_v4\ARM\CMSIS\Include-I d:\Keil_v4\ARM\Inc\ST\STM32F10x-o .\output\obj\enc28j60.o --omf_browse .\output\obj\enc28j60.crf --depend .\output\obj\enc28j60.d)
 I (d:\Keil_v4\ARM\ARMCC\include\stdio.h)(0x51C7B744)
-I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1BD550)
+I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1CE2B7)
 I (E:\github\YH\src\libstm32\cmsis\stm32f10x.h)(0x5A1B69F5)
 I (E:\github\YH\src\libstm32\cmsis\core_cm3.h)(0x5A1B69F5)
 I (d:\Keil_v4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
@@ -848,9 +848,6 @@ I (E:\github\YH\include\app_cfg.h)(0x5A1BCE0C)
 I (E:\github\YH\include\os_cfg.h)(0x5A1BD991)
 I (E:\github\YH\src\ucosii\port\os_cpu.h)(0x5011F610)
 I (E:\github\YH\src\SYSTEM\delay\delay.h)(0x5A1B69F5)
-I (E:\github\YH\src\ccdebug\inlcude\ccdebug.h)(0x5A1B77E6)
-I (E:\github\YH\src\ccdebug\inlcude\ccdebug_core.h)(0x5A1B78F1)
-I (E:\github\YH\src\ccdebug\inlcude\ccdebug_port.h)(0x5A1B7918)
 F (.\src\HARDWARE\TIMER\timerx.c)(0x5A1B69F5)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\include -I.\src\ccdebug\inlcude -I.\src\libstm32\cmsis -I.\src\libstm32\inc -I.\src\ucosii\src -I.\src\ucosii\port -I.\src\task -I.\src\HARDWARE\SRAM -I.\src\HARDWARE\TIMER -I.\src\HARDWARE\ENC28J60 -I.\src\HARDWARE\USART -I.\src\mem -I.\src\collect\include -I.\src\SYSTEM -I.\src\SYSTEM\sys -I.\src\SYSTEM\delay -I.\src\LWIP -I.\src\LWIP\lwip-1.4.1\src\include -I.\src\LWIP\lwip-1.4.1\src\include\ipv4 -I.\src\LWIP\lwip-1.4.1\src\include\netif -I.\src\LWIP\lwip_app\lwip_comm -I.\src\LWIP\lwip_app\web_server_demo-I d:\Keil_v4\ARM\RV31\INC-I d:\Keil_v4\ARM\CMSIS\Include-I d:\Keil_v4\ARM\Inc\ST\STM32F10x-o .\output\obj\timerx.o --omf_browse .\output\obj\timerx.crf --depend .\output\obj\timerx.d)
 I (E:\github\YH\src\HARDWARE\TIMER\timerx.h)(0x5A1B69F5)
 I (E:\github\YH\src\SYSTEM\sys\mysys.h)(0x5A1B69F5)
@@ -1283,9 +1280,9 @@ I (E:\github\YH\src\ucosii\src\ucos_ii.h)(0x50FFA8F0)
 I (E:\github\YH\include\app_cfg.h)(0x5A1BCE0C)
 I (E:\github\YH\include\os_cfg.h)(0x5A1BD991)
 I (E:\github\YH\src\ucosii\port\os_cpu.h)(0x5011F610)
-F (.\src\LWIP\lwip_app\lwip_comm\lwip_comm.c)(0x5A1B7A07)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\include -I.\src\ccdebug\inlcude -I.\src\libstm32\cmsis -I.\src\libstm32\inc -I.\src\ucosii\src -I.\src\ucosii\port -I.\src\task -I.\src\HARDWARE\SRAM -I.\src\HARDWARE\TIMER -I.\src\HARDWARE\ENC28J60 -I.\src\HARDWARE\USART -I.\src\mem -I.\src\collect\include -I.\src\SYSTEM -I.\src\SYSTEM\sys -I.\src\SYSTEM\delay -I.\src\LWIP -I.\src\LWIP\lwip-1.4.1\src\include -I.\src\LWIP\lwip-1.4.1\src\include\ipv4 -I.\src\LWIP\lwip-1.4.1\src\include\netif -I.\src\LWIP\lwip_app\lwip_comm -I.\src\LWIP\lwip_app\web_server_demo-I d:\Keil_v4\ARM\RV31\INC-I d:\Keil_v4\ARM\CMSIS\Include-I d:\Keil_v4\ARM\Inc\ST\STM32F10x-o .\output\obj\lwip_comm.o --omf_browse .\output\obj\lwip_comm.crf --depend .\output\obj\lwip_comm.d)
+F (.\src\LWIP\lwip_app\lwip_comm\lwip_comm.c)(0x5A1CB8AD)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\include -I.\src\ccdebug\inlcude -I.\src\libstm32\cmsis -I.\src\libstm32\inc -I.\src\ucosii\src -I.\src\ucosii\port -I.\src\task -I.\src\HARDWARE\SRAM -I.\src\HARDWARE\TIMER -I.\src\HARDWARE\ENC28J60 -I.\src\HARDWARE\USART -I.\src\mem -I.\src\collect\include -I.\src\SYSTEM -I.\src\SYSTEM\sys -I.\src\SYSTEM\delay -I.\src\LWIP -I.\src\LWIP\lwip-1.4.1\src\include -I.\src\LWIP\lwip-1.4.1\src\include\ipv4 -I.\src\LWIP\lwip-1.4.1\src\include\netif -I.\src\LWIP\lwip_app\lwip_comm -I.\src\LWIP\lwip_app\web_server_demo-I d:\Keil_v4\ARM\RV31\INC-I d:\Keil_v4\ARM\CMSIS\Include-I d:\Keil_v4\ARM\Inc\ST\STM32F10x-o .\output\obj\lwip_comm.o --omf_browse .\output\obj\lwip_comm.crf --depend .\output\obj\lwip_comm.d)
 I (E:\github\YH\src\LWIP\lwip_app\lwip_comm\lwip_comm.h)(0x5A1B69F5)
-I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1BD550)
+I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1CE2B7)
 I (E:\github\YH\src\libstm32\cmsis\stm32f10x.h)(0x5A1B69F5)
 I (E:\github\YH\src\libstm32\cmsis\core_cm3.h)(0x5A1B69F5)
 I (d:\Keil_v4\ARM\ARMCC\include\stdint.h)(0x51C7B744)
@@ -1474,7 +1471,7 @@ I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\lwip\netif.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\ipv4\lwip\icmp.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip_app\web_server_demo\fs.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip_app\lwip_comm\lwip_comm.h)(0x5A1B69F5)
-I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1BD550)
+I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1CE2B7)
 F (.\src\LWIP\lwip_app\web_server_demo\httpd_cgi_ssi.c)(0x5A1B69F5)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\include -I.\src\ccdebug\inlcude -I.\src\libstm32\cmsis -I.\src\libstm32\inc -I.\src\ucosii\src -I.\src\ucosii\port -I.\src\task -I.\src\HARDWARE\SRAM -I.\src\HARDWARE\TIMER -I.\src\HARDWARE\ENC28J60 -I.\src\HARDWARE\USART -I.\src\mem -I.\src\collect\include -I.\src\SYSTEM -I.\src\SYSTEM\sys -I.\src\SYSTEM\delay -I.\src\LWIP -I.\src\LWIP\lwip-1.4.1\src\include -I.\src\LWIP\lwip-1.4.1\src\include\ipv4 -I.\src\LWIP\lwip-1.4.1\src\include\netif -I.\src\LWIP\lwip_app\lwip_comm -I.\src\LWIP\lwip_app\web_server_demo-I d:\Keil_v4\ARM\RV31\INC-I d:\Keil_v4\ARM\CMSIS\Include-I d:\Keil_v4\ARM\Inc\ST\STM32F10x-o .\output\obj\httpd_cgi_ssi.o --omf_browse .\output\obj\httpd_cgi_ssi.crf --depend .\output\obj\httpd_cgi_ssi.d)
 I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\lwip\debug.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\lwip\arch.h)(0x5A1B69F5)
@@ -1533,7 +1530,7 @@ I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\lwip\netif.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\ipv4\lwip\icmp.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip_app\web_server_demo\fs.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip_app\lwip_comm\lwip_comm.h)(0x5A1B69F5)
-I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1BD550)
+I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1CE2B7)
 F (.\src\LWIP\lwip-1.4.1\src\netif\etharp.c)(0x5A1B69F5)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\include -I.\src\ccdebug\inlcude -I.\src\libstm32\cmsis -I.\src\libstm32\inc -I.\src\ucosii\src -I.\src\ucosii\port -I.\src\task -I.\src\HARDWARE\SRAM -I.\src\HARDWARE\TIMER -I.\src\HARDWARE\ENC28J60 -I.\src\HARDWARE\USART -I.\src\mem -I.\src\collect\include -I.\src\SYSTEM -I.\src\SYSTEM\sys -I.\src\SYSTEM\delay -I.\src\LWIP -I.\src\LWIP\lwip-1.4.1\src\include -I.\src\LWIP\lwip-1.4.1\src\include\ipv4 -I.\src\LWIP\lwip-1.4.1\src\include\netif -I.\src\LWIP\lwip_app\lwip_comm -I.\src\LWIP\lwip_app\web_server_demo-I d:\Keil_v4\ARM\RV31\INC-I d:\Keil_v4\ARM\CMSIS\Include-I d:\Keil_v4\ARM\Inc\ST\STM32F10x-o .\output\obj\etharp.o --omf_browse .\output\obj\etharp.crf --depend .\output\obj\etharp.d)
 I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\lwip\opt.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip_app\lwip_comm\lwipopts.h)(0x5A1B69F5)
@@ -1646,7 +1643,7 @@ I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\lwip\netif.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\ipv4\lwip\ip_addr.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\lwip\def.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\lwip\pbuf.h)(0x5A1B69F5)
-I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1BD550)
+I (E:\github\YH\src\HARDWARE\ENC28J60\enc28j60.h)(0x5A1CE2B7)
 I (E:\github\YH\src\LWIP\lwip_app\lwip_comm\lwip_comm.h)(0x5A1B69F5)
 I (E:\github\YH\src\mem\lib_mem.h)(0x5A1B69F5)
 I (E:\github\YH\src\LWIP\lwip-1.4.1\src\include\netif\etharp.h)(0x5A1B69F5)

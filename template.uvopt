@@ -155,7 +155,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name></Name>
+          <Name>/</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -716,7 +716,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>147</TopLine>
+      <TopLine>150</TopLine>
       <CurrentLine>151</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\src\libstm32\cmsis\startup_stm32f10x_hd.s</PathWithFileName>
@@ -740,7 +740,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
+      <TopLine>22</TopLine>
       <CurrentLine>23</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\src\init\main.c</PathWithFileName>
@@ -794,10 +794,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>32</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>1</CurrentLine>
+      <TopLine>568</TopLine>
+      <CurrentLine>569</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\src\HARDWARE\ENC28J60\enc28j60.c</PathWithFileName>
       <FilenameWithoutPath>enc28j60.c</FilenameWithoutPath>
@@ -850,10 +850,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>1</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1783</TopLine>
-      <CurrentLine>1782</CurrentLine>
+      <TopLine>1777</TopLine>
+      <CurrentLine>1778</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\src\ucosii\src\os_core.c</PathWithFileName>
       <FilenameWithoutPath>os_core.c</FilenameWithoutPath>
@@ -1042,10 +1042,10 @@
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>40</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>96</TopLine>
-      <CurrentLine>101</CurrentLine>
+      <TopLine>103</TopLine>
+      <CurrentLine>104</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\src\ucosii\port\os_cpu_a.asm</PathWithFileName>
       <FilenameWithoutPath>os_cpu_a.asm</FilenameWithoutPath>
@@ -1458,10 +1458,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>2037868</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>147</TopLine>
+      <CurrentLine>148</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\src\LWIP\lwip-1.4.1\src\netif\ethernetif.c</PathWithFileName>
       <FilenameWithoutPath>ethernetif.c</FilenameWithoutPath>

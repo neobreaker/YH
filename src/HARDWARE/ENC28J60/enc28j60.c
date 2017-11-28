@@ -63,12 +63,12 @@ void ENC28J60_SPI2_Init(void)
 {
     SPI_InitTypeDef  SPI_InitStructure;
     GPIO_InitTypeDef  GPIO_InitStructure;
-	EXTI_InitTypeDef EXTI_InitStructure;
-	NVIC_InitTypeDef NVIC_InitStructure;
+    EXTI_InitTypeDef EXTI_InitStructure;
+    NVIC_InitTypeDef NVIC_InitStructure;
     RCC_APB1PeriphClockCmd( RCC_APB1Periph_SPI2,  ENABLE );//SPI2时钟使能
     RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOD|RCC_APB2Periph_GPIOG|RCC_APB2Periph_AFIO, ENABLE );//PORTB,D,G时钟使能
 
-	
+
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;                // 端口配置
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;         //推挽输出
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;        //IO口速度为50MHz
@@ -82,35 +82,35 @@ void ENC28J60_SPI2_Init(void)
     GPIO_Init(GPIOB, &GPIO_InitStructure);                   //根据设定参数初始化GPIOB.12
     GPIO_SetBits(GPIOB,GPIO_Pin_12);                         //PB.12上拉
 
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_8;		//PG6/7/8 推挽  上拉
-    GPIO_Init(GPIOG, &GPIO_InitStructure);                   	//根据设定参数初始化//PG6/7/8
-    GPIO_SetBits(GPIOG,GPIO_Pin_6|GPIO_Pin_8);					//PG6/7/8上拉
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_8;        //PG6/7/8 推挽  上拉
+    GPIO_Init(GPIOG, &GPIO_InitStructure);                      //根据设定参数初始化//PG6/7/8
+    GPIO_SetBits(GPIOG,GPIO_Pin_6|GPIO_Pin_8);                  //PG6/7/8上拉
 
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  			//PB13/14/15复用推挽输出
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;             //PB13/14/15复用推挽输出
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init(GPIOB, &GPIO_InitStructure);						//初始化GPIOB
+    GPIO_Init(GPIOB, &GPIO_InitStructure);                      //初始化GPIOB
 
-    GPIO_SetBits(GPIOB,GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);  	//PB13/14/15上拉
-/*
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;					// PG7 INT
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOG, &GPIO_InitStructure);
-	GPIO_EXTILineConfig(GPIO_PortSourceGPIOG, GPIO_PinSource7);
+    GPIO_SetBits(GPIOB,GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);    //PB13/14/15上拉
+    /*
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;                   // PG7 INT
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        GPIO_Init(GPIOG, &GPIO_InitStructure);
+        GPIO_EXTILineConfig(GPIO_PortSourceGPIOG, GPIO_PinSource7);
 
-	EXTI_InitStructure.EXTI_Line = EXTI_Line7;	
-  	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	
-  	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-  	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-  	EXTI_Init(&EXTI_InitStructure);
+        EXTI_InitStructure.EXTI_Line = EXTI_Line7;
+        EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+        EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+        EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+        EXTI_Init(&EXTI_InitStructure);
 
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;			
-  	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x02;
-  	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x03;		
-  	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;				
-  	NVIC_Init(&NVIC_InitStructure);
-*/
+        NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
+        NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x02;
+        NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x03;
+        NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+        NVIC_Init(&NVIC_InitStructure);
+    */
     SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;  //设置SPI单向或者双向的数据模式:SPI设置为双线双向全双工
     SPI_InitStructure.SPI_Mode = SPI_Mode_Master;       //设置SPI工作模式:设置为主SPI
     SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;       //设置SPI的数据大小:SPI发送接收8位帧结构
@@ -128,25 +128,25 @@ void ENC28J60_SPI2_Init(void)
 
 void EXTI9_5_IRQHandler(void)
 {
-	u8 reg = 0;
-#if OS_CRITICAL_METHOD == 3                               
+    u8 reg = 0;
+#if OS_CRITICAL_METHOD == 3
     OS_CPU_SR  cpu_sr = 0;
 #endif
     OS_ENTER_CRITICAL();
-	OSIntEnter();
-	OS_EXIT_CRITICAL();
-	
-	if(EXTI_GetITStatus(EXTI_Line7))	
-	{	
-		EXTI_ClearITPendingBit(EXTI_Line7);
-		
-		OSSemPost(sem_enc28j60input);
-		
-		ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_PKTIF| EIR_TXIF);
+    OSIntEnter();
+    OS_EXIT_CRITICAL();
 
-	}
+    if(EXTI_GetITStatus(EXTI_Line7))
+    {
+        EXTI_ClearITPendingBit(EXTI_Line7);
 
-	OSIntExit();
+        OSSemPost(sem_enc28j60input);
+
+        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_PKTIF| EIR_TXIF);
+
+    }
+
+    OSIntExit();
 }
 
 void ENC28J60_Reset(void)
@@ -170,11 +170,11 @@ u8 ENC28J60_Read_Op(u8 op,u8 addr)
     dat=op|(addr&ADDR_MASK);
     SPI2_ReadWriteByte(dat);
     dat=SPI2_ReadWriteByte(0xFF);
-	
+
     //如果是读取MAC/MII寄存器,则第二次读到的数据才是正确的,见手册29页
     if(addr&0x80)
-		dat=SPI2_ReadWriteByte(0xFF);
-	
+        dat=SPI2_ReadWriteByte(0xFF);
+
     ENC28J60_CS=1;
     return dat;
 }
@@ -239,7 +239,7 @@ void ENC28J60_Set_Bank(u8 bank)
 u8 ENC28J60_Read(u8 addr)
 {
     ENC28J60_Set_Bank(addr);//设置BANK
-    
+
     return ENC28J60_Read_Op(ENC28J60_READ_CTRL_REG,addr);
 }
 //向ENC28J60指定寄存器写数据
@@ -277,7 +277,7 @@ u8 ENC28J60_Init(u8* macaddr)
         delay_ms(1);
     };
     if(retry>=250)
-		return 1;//ENC28J60初始化失败
+        return 1;//ENC28J60初始化失败
 
 
     // do bank 0 stuff
@@ -435,16 +435,16 @@ u8 ENC28J60_Init(u8* macaddr)
     //0 = 禁止接收数据包待处理中断
     //ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,EIE,EIE_INTIE|EIE_PKTIE | EIE_RXERIE);
     ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR,EIE,EIE_INTIE|EIE_PKTIE | EIE_RXERIE);
-    
+
     // enable packet reception
     //bit 2 RXEN：接收使能位
     //1 = 通过当前过滤器的数据包将被写入接收缓冲器
     //0 = 忽略所有接收的数据包
     ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON1,ECON1_RXEN);
     if(ENC28J60_Read(MAADR5)== macaddr[0])
-		return 0;//初始化成功
-    else 
-		return 1;
+        return 0;//初始化成功
+    else
+        return 1;
 
 }
 //读取EREVID
@@ -464,57 +464,54 @@ static u8 econ1 = 0;
 //packet:数据包
 void ENC28J60_Packet_Send(u32 len,u8* packet)
 {
-	u8 err = OS_ERR_NONE;	
-	u16 retry = 0;
-	
-	OSSemPend(sem_enc28j60lock, 0, &err);
-	if(err == OS_ERR_NONE)
-	{
-		while(ENC28J60_Read(ECON1)&ECON1_TXRTS)
-		{
-			retry++;
-			if(retry > 200)
-			{
-				OSSemPost(sem_enc28j60lock);
-				return ;
-			}
-		}
-		
-	    //设置发送缓冲区地址写指针入口
-	    ENC28J60_Write(EWRPTL,TXSTART_INIT&0xFF);
-	    ENC28J60_Write(EWRPTH,TXSTART_INIT>>8);
-	    //设置TXND指针，以对应给定的数据包大小
-	    ENC28J60_Write(ETXNDL,(TXSTART_INIT+len)&0xFF);
-	    ENC28J60_Write(ETXNDH,(TXSTART_INIT+len)>>8);
-	    //写每包控制字节（0x00表示使用macon3的设置）
+    u8 err = OS_ERR_NONE;
+    u16 retry = 0;
 
-		ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_TXIF);
-		
-	    ENC28J60_Write_Op(ENC28J60_WRITE_BUF_MEM,0,0x00);
-	    //复制数据包到发送缓冲区
+    OSSemPend(sem_enc28j60lock, 0, &err);
+    if(err == OS_ERR_NONE)
+    {
+        while(ENC28J60_Read(ECON1)&ECON1_TXRTS)
+        {
+            retry++;
+            if(retry > 200)
+            {
+                OSSemPost(sem_enc28j60lock);
+                return ;
+            }
+        }
 
-	    ENC28J60_Write_Buf(len,packet);
-	    //发送数据到网络
-	    ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON1,ECON1_TXRTS);
-	    //复位发送逻辑的问题。参见Rev. B4 Silicon Errata point 12.
-	    if((ENC28J60_Read(EIR)&EIR_TXERIF))
-	    {
-	        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR,ECON1,ECON1_TXRTS);
+		//Errata: Transmit Logic reset
+        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, ECON1, ECON1_TXRST);
+        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, ECON1, ECON1_TXRST);
 
-			estat = ENC28J60_Read(ESTAT);
-			eir = ENC28J60_Read(EIR);
-			econ1 = ENC28J60_Read(ECON1);
-	    }
-		else
-		{
-			estat = ENC28J60_Read(ESTAT);
-			eir = ENC28J60_Read(EIR);
-			econ1 = ENC28J60_Read(ECON1);
+        //设置发送缓冲区地址写指针入口
+        ENC28J60_Write(EWRPTL,TXSTART_INIT&0xFF);
+        ENC28J60_Write(EWRPTH,TXSTART_INIT>>8);
+        //设置TXND指针，以对应给定的数据包大小
+        ENC28J60_Write(ETXNDL,(TXSTART_INIT+len)&0xFF);
+        ENC28J60_Write(ETXNDH,(TXSTART_INIT+len)>>8);
+        //写每包控制字节（0x00表示使用macon3的设置）
 
-		}
+        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_TXIF);
 
-		OSSemPost(sem_enc28j60lock);
-	}
+        ENC28J60_Write_Op(ENC28J60_WRITE_BUF_MEM,0,0x00);
+        //复制数据包到发送缓冲区
+
+        ENC28J60_Write_Buf(len,packet);
+        //发送数据到网络
+        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON1,ECON1_TXRTS);
+        //复位发送逻辑的问题。参见Rev. B4 Silicon Errata point 12.
+        if((ENC28J60_Read(EIR)&EIR_TXERIF))
+        {
+            ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR,ECON1,ECON1_TXRTS);
+
+            estat = ENC28J60_Read(ESTAT);
+            eir = ENC28J60_Read(EIR);
+            econ1 = ENC28J60_Read(ECON1);
+        }
+
+        OSSemPost(sem_enc28j60lock);
+    }
 }
 //从网络获取一个数据包内容
 //maxlen:数据包最大允许接收长度
@@ -524,62 +521,65 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
 {
     u32 rxstat;
     u32 len;
-	u8 err = OS_ERR_NONE;	
-	u8 reg = 0;
-	OSSemPend(sem_enc28j60lock, 0, &err);
-	if(err == OS_ERR_NONE)
-	{
-		reg = ENC28J60_Read(EPKTCNT);
-		if(reg == 0)						//是否收到数据包
-		{
-			estat = ENC28J60_Read(ESTAT);
-			eir = ENC28J60_Read(EIR);
-			econ1 = ENC28J60_Read(ECON1);
+    u8 err = OS_ERR_NONE;
+    u8 reg = 0;
+    OSSemPend(sem_enc28j60lock, 0, &err);
+    if(err == OS_ERR_NONE)
+    {
+        reg = ENC28J60_Read(EPKTCNT);
+        if(reg == 0)                        //是否收到数据包
+        {
 			
-			if(eir & EIR_RXERIF)
-			{
-				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_RXERIF);
-				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, EIE, EIE_INTIE | EIE_RXERIE);
-			}
+            estat = ENC28J60_Read(ESTAT);
+            eir = ENC28J60_Read(EIR);
+            econ1 = ENC28J60_Read(ECON1);
 			
-			OSSemPost(sem_enc28j60lock);
-			return 0;  					
-		}
-			
-		ENC28J60_Write(ERDPTL,(NextPacketPtr));				//设置接收缓冲器读指针
-		ENC28J60_Write(ERDPTH,(NextPacketPtr)>>8);
-		
-		NextPacketPtr=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);	// 读下一个包的指针
-		NextPacketPtr|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
-		
-		len=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);				//读包的长度
-		len|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
-		
-		len-=4; 													//去掉CRC计数
-		
-		rxstat=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);			//读取接收状态
-		rxstat|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
-		
-		if (len>maxlen-1)
-			len=maxlen-1;											//限制接收长度
-			
-		//检查CRC和符号错误
-		// ERXFCON.CRCEN为默认设置,一般我们不需要检查.
-		if((rxstat&0x80) == 0)
-			len = 0;									//无效
-		else 
-			ENC28J60_Read_Buf(len,packet);				//从接收缓冲器中复制数据包
-			
-		//RX读指针移动到下一个接收到的数据包的开始位置
-		//并释放我们刚才读出过的内存
-		ENC28J60_Write(ERXRDPTL,(NextPacketPtr));
-		ENC28J60_Write(ERXRDPTH,(NextPacketPtr)>>8);
-		
-		//递减数据包计数器标志我们已经得到了这个包
-		ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON2,ECON2_PKTDEC);
+            if(eir & EIR_RXERIF)
+            {
+                //Errata: Transmit Logic reset
+		        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, ECON1, ECON1_RXRST);
+		        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, ECON1, ECON1_RXRST);
 
-		OSSemPost(sem_enc28j60lock);
-	}
+            }
+
+            OSSemPost(sem_enc28j60lock);
+            return 0;
+        }
+
+        ENC28J60_Write(ERDPTL,(NextPacketPtr));             //设置接收缓冲器读指针
+        ENC28J60_Write(ERDPTH,(NextPacketPtr)>>8);
+
+        NextPacketPtr=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);    // 读下一个包的指针
+        NextPacketPtr|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
+
+        len=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);              //读包的长度
+        len|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
+
+        len-=4;                                                     //去掉CRC计数
+
+        rxstat=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);           //读取接收状态
+        rxstat|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
+
+        if (len>maxlen-1)
+            len=maxlen-1;                                           //限制接收长度
+
+        //检查CRC和符号错误
+        // ERXFCON.CRCEN为默认设置,一般我们不需要检查.
+        if((rxstat&0x80) == 0)
+            len = 0;                                    //无效
+        else
+            ENC28J60_Read_Buf(len,packet);              //从接收缓冲器中复制数据包
+
+        //RX读指针移动到下一个接收到的数据包的开始位置
+        //并释放我们刚才读出过的内存
+        ENC28J60_Write(ERXRDPTL,(NextPacketPtr));
+        ENC28J60_Write(ERXRDPTH,(NextPacketPtr)>>8);
+
+        //递减数据包计数器标志我们已经得到了这个包
+        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON2,ECON2_PKTDEC);
+
+        OSSemPost(sem_enc28j60lock);
+    }
     return(len);
 }
 

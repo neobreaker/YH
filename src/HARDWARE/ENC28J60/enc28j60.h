@@ -242,13 +242,20 @@
 // the entire available packet buffer space is allocated
 //
 // start with recbuf at 0/
+/*
 #define RXSTART_INIT     0x0
 // receive buffer end
 #define RXSTOP_INIT      (0x1FFF-2048-1)
 // start TX buffer at 0x1FFF-0x0600, pace for one full ethernet frame (0~1518 bytes)
-#define TXSTART_INIT     (0x1FFF-2048)
+#define TXSTART_INIT     (0x1FFF-2047)
 // stp TX buffer at end of mem
 #define TXSTOP_INIT      0x1FFF
+*/
+#define TXSTART_INIT    0x0000  // start TX buffer at 0
+#define TXSTOP_INIT     0x05ff
+#define RXSTART_INIT    0x0600  // give TX buffer space for one full ethernet frame (~1500 bytes)
+#define RXSTOP_INIT     0x1FFF  // receive buffer gets the rest
+
 // max frame length which the conroller will accept:
 #define   MAX_FRAMELEN    1518        // (note: maximum ethernet frame length would be 1518)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -143,7 +143,7 @@ void lwip_comm_default_ip_set(__lwip_dev *lwipx)
     //默认子网掩码:255.255.255.0
     lwipx->netmask[0]=255;
     lwipx->netmask[1]=255;
-    lwipx->netmask[2]=0;
+    lwipx->netmask[2]=255;
     lwipx->netmask[3]=0;
     //默认网关:192.168.1.1
     lwipx->gateway[0]=192;
