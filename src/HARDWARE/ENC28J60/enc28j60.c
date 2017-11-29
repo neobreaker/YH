@@ -470,15 +470,16 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
     OSSemPend(sem_enc28j60lock, 0, &err);
     if(err == OS_ERR_NONE)
     {
-        while(ENC28J60_Read(ECON1)&ECON1_TXRTS)
+        do
         {
+			eir = ENC28J60_Read(ECON1);
             retry++;
             if(retry > 200)
             {
                 OSSemPost(sem_enc28j60lock);
                 return ;
             }
-        }
+        }while((eir&ECON1_TXRTS | eir&ECON1_DMAST));
 
 		//Errata: Transmit Logic reset
         ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, ECON1, ECON1_TXRST);
