@@ -472,14 +472,24 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
     {
         do
         {
-			eir = ENC28J60_Read(ECON1);
-            retry++;
+			eir   = ENC28J60_Read(EIR);
+			estat = ENC28J60_Read(ESTAT);
+			econ1 = ENC28J60_Read(ECON1);
+
+			if(estat&(ESTAT_TXABRT | ESTAT_LATECOL))
+			{
+				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, ESTAT, ESTAT_TXABRT | ESTAT_LATECOL);
+				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_TXERIF);
+			}
+
+	        retry++;
             if(retry > 200)
             {
                 OSSemPost(sem_enc28j60lock);
                 return ;
             }
-        }while((eir&ECON1_TXRTS | eir&ECON1_DMAST));
+        }while((econ1&ECON1_TXRTS | econ1&ECON1_DMAST) | (estat&ESTAT_TXABRT));
+
 
 		//Errata: Transmit Logic reset
         ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, ECON1, ECON1_TXRST);
@@ -505,10 +515,6 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
         if((ENC28J60_Read(EIR)&EIR_TXERIF))
         {
             ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR,ECON1,ECON1_TXRTS);
-
-            estat = ENC28J60_Read(ESTAT);
-            eir = ENC28J60_Read(EIR);
-            econ1 = ENC28J60_Read(ECON1);
         }
 
         OSSemPost(sem_enc28j60lock);
@@ -538,9 +544,16 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
             if(eir & EIR_RXERIF)
             {
                 //Errata: Transmit Logic reset
-		        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET, ECON1, ECON1_RXRST);
-		        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, ECON1, ECON1_RXRST);
-
+				NextPacketPtr = 0;
+				ENC28J60_Write(ERDPTL,(NextPacketPtr));             //设置接收缓冲器读指针
+        		ENC28J60_Write(ERDPTH,(NextPacketPtr)>>8);
+				
+                ENC28J60_Write(ERXRDPTL,RXSTART_INIT&0xFF);
+			    ENC28J60_Write(ERXRDPTH,RXSTART_INIT>>8);
+				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON2,ECON2_PKTDEC);
+				
+		        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_RXERIF);
+				
             }
 
             OSSemPost(sem_enc28j60lock);

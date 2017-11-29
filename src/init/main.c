@@ -23,7 +23,7 @@ int main(void)
 {
 	bsp_init();
 	
-	delay_ms(1000);		/* wait power stable */ 
+	delay_ms(3000);		/* wait power stable */ 
 	
 	OSInit();
 

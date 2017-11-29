@@ -252,9 +252,9 @@
 #define TXSTOP_INIT      0x1FFF
 */
 #define TXSTART_INIT    0x0000  // start TX buffer at 0
-#define TXSTOP_INIT     0x05ff
+#define TXSTOP_INIT     0x05f0
 #define RXSTART_INIT    0x0600  // give TX buffer space for one full ethernet frame (~1500 bytes)
-#define RXSTOP_INIT     0x1FFF  // receive buffer gets the rest
+#define RXSTOP_INIT     0x1ff0  // receive buffer gets the rest
 
 // max frame length which the conroller will accept:
 #define   MAX_FRAMELEN    1518        // (note: maximum ethernet frame length would be 1518)
@@ -279,7 +279,6 @@ u8 ENC28J60_Init(u8* macaddr);
 u8 ENC28J60_Get_EREVID(void);
 void ENC28J60_Packet_Send(u32 len,u8* packet);
 u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet); 
-void ENC28J60_Err_Resume(void) ;
 #endif
 
 
