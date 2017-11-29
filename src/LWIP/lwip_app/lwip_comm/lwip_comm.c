@@ -126,7 +126,7 @@ void lwip_comm_default_ip_set(__lwip_dev *lwipx)
     //默认远端IP为:192.168.1.106
     lwipx->remoteip[0]=192;
     lwipx->remoteip[1]=168;
-    lwipx->remoteip[2]=2;
+    lwipx->remoteip[2]=3;
     lwipx->remoteip[3]=106;
     //MAC地址设置(高三字节固定为:2.0.0,低三字节用STM32唯一ID)
     lwipx->mac[0]=2;
@@ -138,7 +138,7 @@ void lwip_comm_default_ip_set(__lwip_dev *lwipx)
     //默认本地IP为:192.168.1.30
     lwipx->ip[0]=192;
     lwipx->ip[1]=168;
-    lwipx->ip[2]=2;
+    lwipx->ip[2]=3;
     lwipx->ip[3]=60;
     //默认子网掩码:255.255.255.0
     lwipx->netmask[0]=255;
@@ -148,7 +148,7 @@ void lwip_comm_default_ip_set(__lwip_dev *lwipx)
     //默认网关:192.168.1.1
     lwipx->gateway[0]=192;
     lwipx->gateway[1]=168;
-    lwipx->gateway[2]=2;
+    lwipx->gateway[2]=3;
     lwipx->gateway[3]=1;
     lwipx->dhcpstatus=0;//没有DHCP
 }
@@ -177,9 +177,12 @@ u8 lwip_comm_init(void)
     lwip_comm_default_ip_set(&lwipdev);         //设置默认IP等信息
 
     if(ENC28J60_Init(lwipdev.mac))
+	{
+		CC_DEBUGF(CC_DBG_ON | CC_DBG_LEVEL_WARNING, "enc28j60 init failed\n");
         return 2;                       //初始化 ENC28J60
+	}
 
-	CC_DEBUGF(CC_DBG_ON | CC_DBG_LEVEL_WARNING, "enc28j60 init success\n");
+	CC_DEBUGF(CC_DBG_ON | CC_DBG_LEVEL_WARNING, "enc28j60 init ok\n");
 	
     tcpip_init(NULL,NULL);              //初始化tcp ip内核,该函数里面会创建tcpip_thread内核任务
 
