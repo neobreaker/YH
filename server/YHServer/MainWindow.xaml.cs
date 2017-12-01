@@ -28,6 +28,7 @@ namespace YHServer
         public MainWindow()
         {
             InitializeComponent();
+            ListenSocketInit();
         }
 
         private void ListenSocketInit()
