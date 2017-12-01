@@ -33,7 +33,9 @@ namespace YHServer
 
         private void ListenSocketInit()
         {
-            m_yhnet = new YHnet("192.168.3.60", 50000, 50000);
+            m_yhnet = new YHnet("192.168.3.60");
+
+            m_yhnet.Start();
         }
 
         private void BtnConnect_Click(object sender, RoutedEventArgs e)
