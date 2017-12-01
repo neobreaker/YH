@@ -4,21 +4,20 @@
 #include "lwip/sockets.h"  
 #include "lwip/err.h"
 #include "lib_mem.h"
-#include "task_udpserver.h"
+#include "task_udpclient.h"
 
 extern OS_EVENT* sem_vs1053async;
 
-static u8 data_buffer[256];
+extern struct sockaddr_in g_remote_sin;
+
 static u32 time_stamp = 0, time_elapse = 0;
-
-struct sockaddr_in g_remote_sin;
-
-void task_udpserver(void *p_arg)
+void task_udpclient(void *p_arg)
 {
 	int err;	
+	u8 _err;
 	struct sockaddr_in sin;
 	socklen_t sin_len; 
-	int sock_fd;                /* server socked */
+	int sock_fd;                
 	u8* snddata;
 	int i = 0;
 	
@@ -33,7 +32,7 @@ void task_udpserver(void *p_arg)
 
 	sin.sin_family=AF_INET;  
     sin.sin_addr.s_addr=htonl(INADDR_ANY);  
-    sin.sin_port=htons(SRC_RCV_PORT);
+    sin.sin_port=htons(SRC_SND_PORT);
 	sin_len = sizeof(sin);
 	
 	err = bind(sock_fd, (struct sockaddr *)&sin, sizeof(sin));  
@@ -44,15 +43,19 @@ void task_udpserver(void *p_arg)
 	
 	while(1)
 	{
-		recvfrom(sock_fd, data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&g_remote_sin, &sin_len);
-		OSSemPost(sem_vs1053async);
+		OSSemPend(sem_vs1053async, 0, &_err);
+	    if(_err == OS_ERR_NONE)
+	    {
+			sin.sin_addr.s_addr = g_remote_sin.sin_addr.s_addr;
 
-		/*
-		for(i = 0; i < 1024; i++)
-		{
-			sendto(sock_fd, snddata, 1024, 0, (struct sockaddr *)&g_remote_sin, sizeof(sin)); 
-		}
-		*/
+			time_stamp = OSTimeGet();
+			for(i = 0; i < 1024; i++)
+			{
+				sendto(sock_fd, snddata, 1024, 0, (struct sockaddr *)&sin, sizeof(sin)); 
+			}
+			time_elapse = OSTimeGet() - time_stamp;
+			time_elapse = 0;
+	    }
 	}
 	
 }

@@ -11,6 +11,8 @@
 
 static OS_STK startup_task_stk[STARTUP_TASK_STK_SIZE];
 
+OS_EVENT* sem_vs1053async;			//TEST 
+
 void bsp_init()
 {
 	NVIC_Configuration();
@@ -28,6 +30,8 @@ int main(void)
 	OSInit();
 
 	CC_DEBUGF(CC_DBG_ON | CC_DBG_LEVEL_WARNING, "system booting\n");
+
+    sem_vs1053async 	= OSSemCreate(0);
 	
 	OSTaskCreate(startup_task, (void *)0,
 	             &startup_task_stk[STARTUP_TASK_STK_SIZE - 1],

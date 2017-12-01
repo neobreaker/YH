@@ -4,9 +4,11 @@
 
 static OS_STK task_tcpserver_stk[TASK_TCPSERVER_STK_SIZE];
 static OS_STK task_udpserver_stk[TASK_TCPSERVER_STK_SIZE];
+static OS_STK task_udpclient_stk[TASK_UDPCLIENT_STK_SIZE];
 
 extern void task_tcpserver(void *p_arg);
 extern void task_udpserver(void *p_arg);
+extern void task_udpclient(void *p_arg);
 
 static void systick_init(void)
 {
@@ -17,7 +19,7 @@ static void systick_init(void)
 
 void startup_task(void *p_arg)
 {
-	INT8U err;
+	INT8U err = 0;
 	systick_init();     /* Initialize the SysTick. */
 
 #if (OS_TASK_STAT_EN > 0)
@@ -32,9 +34,12 @@ void startup_task(void *p_arg)
 	                   &task_tcpserver_stk[TASK_TCPSERVER_STK_SIZE-1], TASK_TCPSERVER_PRIO);      
 	*/
 
-	err = OSTaskCreate(task_udpserver, (void *)0,
+	err |= OSTaskCreate(task_udpserver, (void *)0,
 	                   &task_udpserver_stk[TASK_UDPSERVER_STK_SIZE-1], TASK_UDPSERVER_PRIO);      
-
+	
+	err |= OSTaskCreate(task_udpclient, (void *)0,
+	                   &task_udpclient_stk[TASK_UDPCLIENT_STK_SIZE-1], TASK_UDPCLIENT_PRIO);  
+	
 	if (OS_ERR_NONE != err)
 		while(1)
 			;

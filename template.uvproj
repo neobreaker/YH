@@ -652,6 +652,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\task\task_udpserver.c</FilePath>
             </File>
+            <File>
+              <FileName>task_udpclient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\task\task_udpclient.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
