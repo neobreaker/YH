@@ -47,7 +47,7 @@ void task_udpclient(void *p_arg)
 	    if(_err == OS_ERR_NONE)
 	    {
 			sin.sin_addr.s_addr = g_remote_sin.sin_addr.s_addr;
-
+			sin.sin_port = htons(ntohs(g_remote_sin.sin_port)-1);
 			time_stamp = OSTimeGet();
 			for(i = 0; i < 1024; i++)
 			{
