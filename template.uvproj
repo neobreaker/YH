@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\include;.\src\ccdebug\inlcude;.\src\libstm32\cmsis;.\src\libstm32\inc;.\src\ucosii\src;.\src\ucosii\port;.\src\task;.\src\HARDWARE\SRAM;.\src\HARDWARE\TIMER;.\src\HARDWARE\ENC28J60;.\src\HARDWARE\USART;.\src\mem;.\src\collect\include;.\src\SYSTEM;.\src\SYSTEM\sys;.\src\SYSTEM\delay;.\src\LWIP;.\src\LWIP\lwip-1.4.1\src\include;.\src\LWIP\lwip-1.4.1\src\include\ipv4;.\src\LWIP\lwip-1.4.1\src\include\netif;.\src\LWIP\lwip_app\lwip_comm;.\src\LWIP\lwip_app\web_server_demo</IncludePath>
+              <IncludePath>.\include;.\src\ccdebug\inlcude;.\src\libstm32\cmsis;.\src\libstm32\inc;.\src\ucosii\src;.\src\ucosii\port;.\src\task;.\src\HARDWARE\SRAM;.\src\HARDWARE\TIMER;.\src\HARDWARE\ENC28J60;.\src\HARDWARE\USART;.\src\HARDWARE\VS10XX;.\src\mem;.\src\collect\include;.\src\SYSTEM;.\src\SYSTEM\sys;.\src\SYSTEM\delay;.\src\LWIP;.\src\LWIP\lwip-1.4.1\src\include;.\src\LWIP\lwip-1.4.1\src\include\ipv4;.\src\LWIP\lwip-1.4.1\src\include\netif;.\src\LWIP\lwip_app\lwip_comm;.\src\LWIP\lwip_app\web_server_demo</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -561,6 +561,11 @@
               <FileName>debug_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\HARDWARE\USART\debug_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>vs10xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\HARDWARE\VS10XX\vs10xx.c</FilePath>
             </File>
           </Files>
         </Group>

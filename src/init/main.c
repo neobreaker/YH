@@ -8,6 +8,7 @@
 #include "lwip_comm.h"
 #include "delay.h"
 #include "ccdebug.h"
+#include "vs10xx.h"
 
 static OS_STK startup_task_stk[STARTUP_TASK_STK_SIZE];
 
@@ -19,6 +20,8 @@ void bsp_init()
 	delay_init();
 	FSMC_SRAM_Init();
 	ccdebug_port_init(9600);
+	VS_Init();
+	VS_HD_Reset();
 }
 
 int main(void)

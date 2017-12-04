@@ -19,11 +19,7 @@ void task_udpserver(void *p_arg)
 	struct sockaddr_in sin;
 	socklen_t sin_len; 
 	int sock_fd;                /* server socked */
-	u8* snddata;
 	int i = 0;
-	
-	snddata = pvPortMalloc(1024);
-	memset(snddata, 0x5a, 1024);
 	
 	sock_fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock_fd == -1) 
