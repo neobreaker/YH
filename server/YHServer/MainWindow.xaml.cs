@@ -40,6 +40,7 @@ namespace YHServer
         {
             if (!m_is_connected)
             {
+                m_is_connected = true;
                 this.BtnConnect.Content = "断开连接";
 
                 m_yhnet.Start();
@@ -51,6 +52,7 @@ namespace YHServer
             }
             else
             {
+                m_is_connected = false;
                 this.BtnConnect.Content = "建立连接";
 
                 m_yhnet.ShutDown();

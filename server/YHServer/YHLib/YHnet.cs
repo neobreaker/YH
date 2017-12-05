@@ -65,8 +65,9 @@ namespace YHServer.YHLib
 
         public void Start()
         {
+            DateTime dt = DateTime.Now;
             string path = "E:\\";
-            string filename = DateTime.Now.ToShortDateString() + '/' + DateTime.Now.ToShortTimeString()+".wav";
+            string filename = string.Format("{0:yyMMdd HHmmss}", dt) +".wav";
 
             m_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
         }
