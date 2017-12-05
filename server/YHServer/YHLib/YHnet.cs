@@ -19,7 +19,6 @@ namespace YHServer.YHLib
 
         private Thread m_thread_rcv;
         private byte[] m_rcv_buffer;
-        private bool m_is_shutdown = false;
 
         // file
         FileStream m_fs = null;
@@ -45,12 +44,12 @@ namespace YHServer.YHLib
             IPEndPoint rcv = new IPEndPoint(IPAddress.Any, dst_sndport);
             m_remote_rcvep = (EndPoint)rcv;
 
+            m_rcv_buffer = new Byte[4096];
+
             m_thread_rcv = new Thread(ThreadDoRecv);
             m_thread_rcv.IsBackground = true;
 
-            m_rcv_buffer = new Byte[4096];
-
-            m_fs =  new FileStream("E:\\vs1053.wav", FileMode.OpenOrCreate);
+            m_thread_rcv.Start();
         
         }
 
@@ -66,28 +65,31 @@ namespace YHServer.YHLib
 
         public void Start()
         {
-            m_is_shutdown = false;
-            //m_thread_rcv.Start();
+            string path = "E:\\";
+            string filename = DateTime.Now.ToShortDateString() + '/' + DateTime.Now.ToShortTimeString()+".wav";
+
+            m_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
         }
 
         public void ShutDown()
         {
-            m_is_shutdown = true;
+            m_fs.Flush();
+            m_fs.Close();
+            m_fs = null;
         }
 
         private void ThreadDoRecv()
         {
-            int offset = 0;
-            while (!m_is_shutdown)
+            while (true)
             {
                 m_rcvsocket.ReceiveFrom(m_rcv_buffer, SocketFlags.None, ref m_remote_rcvep);
 
                 dgram_queue.Enqueue(m_rcv_buffer);
-                m_fs.Write(m_rcv_buffer, offset, m_rcv_buffer.Length);
-                offset += m_rcv_buffer.Length;
+
+                if(m_fs != null)
+                    m_fs.Write(m_rcv_buffer, 0, m_rcv_buffer.Length);
             }
-            m_fs.Flush();
-            m_fs.Close();
+            
 
         }
 
