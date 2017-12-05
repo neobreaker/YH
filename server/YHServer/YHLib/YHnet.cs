@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+
 
 namespace YHServer.YHLib
 {
@@ -19,7 +21,11 @@ namespace YHServer.YHLib
         private byte[] m_rcv_buffer;
         private bool m_is_shutdown = false;
 
-        private YHbuffer m_dgram_queue =  new YHbuffer(3);
+        // file
+        FileStream m_fs = null;
+        StreamWriter m_sw = null;
+
+        public  YHbuffer dgram_queue =  new YHbuffer(3);
 
         private void YHnetSetup(string dst_ip, int dst_rcvport, int dst_sndport, int src_rcvport, int src_sndport)
         {
@@ -40,6 +46,9 @@ namespace YHServer.YHLib
             m_thread_rcv.IsBackground = true;
 
             m_rcv_buffer = new Byte[4096];
+
+            m_fs =  new FileStream("E:\\vs1053.wv", FileMode.OpenOrCreate);
+            m_sw = new StreamWriter(m_fs);
         }
 
         public YHnet(string dst_ip)
@@ -54,6 +63,7 @@ namespace YHServer.YHLib
 
         public void Start()
         {
+            m_is_shutdown = false;
             m_thread_rcv.Start();
         }
 
@@ -68,8 +78,13 @@ namespace YHServer.YHLib
             {
                 m_rcvsocket.ReceiveFrom(m_rcv_buffer, SocketFlags.None, ref m_remote_rcvep);
 
-                m_dgram_queue.Enqueue(m_rcv_buffer);
+                dgram_queue.Enqueue(m_rcv_buffer);
+                m_sw.Write(m_rcv_buffer);
             }
+            m_sw.Flush();
+            m_sw.Close();
+            m_fs.Close();
+
         }
 
         public void SendTo(byte[] data, int data_len)

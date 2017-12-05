@@ -23,7 +23,7 @@ namespace YHServer
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private bool m_is_connected = false;
         private YHnet m_yhnet = null;
         public MainWindow()
         {
@@ -34,16 +34,28 @@ namespace YHServer
         private void ListenSocketInit()
         {
             m_yhnet = new YHnet("192.168.3.60");
-
-            m_yhnet.Start();
         }
 
         private void BtnConnect_Click(object sender, RoutedEventArgs e)
         {
-            byte[] data = new byte[1024];
-            string cmd = "request";
-            data = ASCIIEncoding.ASCII.GetBytes(cmd);
-            m_yhnet.SendTo(data, data.Length);            
+            if (!m_is_connected)
+            {
+                this.BtnConnect.Content = "断开连接";
+
+                m_yhnet.Start();
+
+                byte[] data = new byte[1024];
+                string cmd = "request";
+                data = ASCIIEncoding.ASCII.GetBytes(cmd);
+                m_yhnet.SendTo(data, data.Length);
+            }
+            else
+            {
+                this.BtnConnect.Content = "建立连接";
+
+                m_yhnet.ShutDown();
+            }
+                        
         }
     }
 }
