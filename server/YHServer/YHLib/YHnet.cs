@@ -23,7 +23,6 @@ namespace YHServer.YHLib
 
         // file
         FileStream m_fs = null;
-        StreamWriter m_sw = null;
 
         public  YHbuffer dgram_queue =  new YHbuffer(3);
 
@@ -48,8 +47,8 @@ namespace YHServer.YHLib
 
             m_rcv_buffer = new Byte[4096];
 
-            m_fs =  new FileStream("E:\\vs1053.wv", FileMode.OpenOrCreate);
-            m_sw = new StreamWriter(m_fs);
+            m_fs =  new FileStream("E:\\vs1053.wav", FileMode.OpenOrCreate);
+        
         }
 
         public YHnet(string dst_ip)
@@ -65,7 +64,7 @@ namespace YHServer.YHLib
         public void Start()
         {
             m_is_shutdown = false;
-            m_thread_rcv.Start();
+            //m_thread_rcv.Start();
         }
 
         public void ShutDown()
@@ -75,15 +74,16 @@ namespace YHServer.YHLib
 
         private void ThreadDoRecv()
         {
+            int offset = 0;
             while (!m_is_shutdown)
             {
                 m_rcvsocket.ReceiveFrom(m_rcv_buffer, SocketFlags.None, ref m_remote_rcvep);
 
                 dgram_queue.Enqueue(m_rcv_buffer);
-                m_sw.Write(m_rcv_buffer);
+                m_fs.Write(m_rcv_buffer, offset, m_rcv_buffer.Length);
+                offset += m_rcv_buffer.Length;
             }
-            m_sw.Flush();
-            m_sw.Close();
+            m_fs.Flush();
             m_fs.Close();
 
         }
