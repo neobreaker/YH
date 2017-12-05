@@ -44,11 +44,7 @@ namespace YHServer
                 this.BtnConnect.Content = "断开连接";
 
                 m_yhnet.Start();
-
-                byte[] data = new byte[1024];
-                string cmd = "request";
-                data = ASCIIEncoding.ASCII.GetBytes(cmd);
-                m_yhnet.SendTo(data, data.Length);
+                
             }
             else
             {

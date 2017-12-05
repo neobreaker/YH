@@ -8,10 +8,11 @@
 
 extern OS_EVENT* sem_vs1053async;
 
-static u8 data_buffer[256];
-static u32 time_stamp = 0, time_elapse = 0;
+static u8 data_buffer[RCV_BUFFER_SIZE];
 
 struct sockaddr_in g_remote_sin;
+
+u8 is_line_established = 0;		//通讯连接是否建立
 
 void task_udpserver(void *p_arg)
 {
@@ -19,7 +20,7 @@ void task_udpserver(void *p_arg)
 	struct sockaddr_in sin;
 	socklen_t sin_len; 
 	int sock_fd;                /* server socked */
-	int i = 0;
+	int ret = 0;
 	
 	sock_fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock_fd == -1) 
@@ -40,8 +41,12 @@ void task_udpserver(void *p_arg)
 	
 	while(1)
 	{
-		recvfrom(sock_fd, data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&g_remote_sin, &sin_len);
-		OSSemPost(sem_vs1053async);
+		ret = recvfrom(sock_fd, data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&g_remote_sin, &sin_len);
+		parse_AT(data_buffer, RCV_BUFFER_SIZE);
+		if(is_line_established)
+		{
+			OSSemPost(sem_vs1053async);
+		}
 
 		/*
 		for(i = 0; i < 1024; i++)
@@ -51,6 +56,25 @@ void task_udpserver(void *p_arg)
 		*/
 	}
 	
+}
+
+void parse_AT(u8* buffer, int len)
+{
+	u8 cmd = 0;
+	if(buffer[0] == 'A' && buffer[1] == 'T')
+	{
+		cmd = buffer[2];
+
+		switch(cmd)
+		{
+		case AT_LINE_EATABLISH:
+			is_line_established = 1;
+			break;
+		case AT_LINE_SHUTDOWN:
+			is_line_established = 0;
+			break;
+		}
+	}
 }
 
 

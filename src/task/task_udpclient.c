@@ -6,9 +6,10 @@
 #include "lib_mem.h"
 #include "task_udpclient.h"
 #include "vs10xx.h"
+#include "wav.h"
 
 extern OS_EVENT* sem_vs1053async;
-
+extern u8 is_line_established;
 extern struct sockaddr_in g_remote_sin;
 
 static u32 time_stamp = 0, time_elapse = 0;
@@ -24,6 +25,7 @@ void task_udpclient(void *p_arg)
     u16 hda1 = 0;
     u32 idx = 0;
 	u32 cnt = 0;
+	WaveHeaderStruct wav_header;
 
     snddata = pvPortMalloc(512);
     memset(snddata, 0x5a, 512);
@@ -53,14 +55,19 @@ void task_udpclient(void *p_arg)
             sin.sin_addr.s_addr = g_remote_sin.sin_addr.s_addr;
             sin.sin_port = htons(ntohs(g_remote_sin.sin_port)-1);
             time_stamp = OSTimeGet();
-			cnt = 5;
+
+			cnt = 100000;
 			
+			wav_header_init(&wav_header, cnt*512+36, cnt*512);
+	
 			recoder_enter_rec_mode(1024*4);
+			
+			sendto(sock_fd, &wav_header, sizeof(wav_header), 0, (struct sockaddr *)&sin, sizeof(sin));
 			
             while(cnt)
             {
                 hda1 = VS_RD_Reg(SPI_HDAT1);
-
+					
                 if((hda1>=256)&&(hda1<896))
                 {
                     idx = 0;
@@ -73,6 +80,9 @@ void task_udpclient(void *p_arg)
                     sendto(sock_fd, snddata, 512, 0, (struct sockaddr *)&sin, sizeof(sin));
 					cnt--;
                 }
+
+				if(!is_line_established)		// Í¨Ñ¶½áÊø
+					break;
             }
             time_elapse = OSTimeGet() - time_stamp;
             time_elapse = 0;

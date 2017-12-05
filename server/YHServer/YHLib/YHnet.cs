@@ -70,6 +70,8 @@ namespace YHServer.YHLib
             string filename = string.Format("{0:yyMMdd HHmmss}", dt) +".wav";
 
             m_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
+
+            LineEstablish();
         }
 
         public void ShutDown()
@@ -77,6 +79,8 @@ namespace YHServer.YHLib
             m_fs.Flush();
             m_fs.Close();
             m_fs = null;
+
+            LineShutDown();
         }
 
         private void ThreadDoRecv()
@@ -90,13 +94,27 @@ namespace YHServer.YHLib
                 if(m_fs != null)
                     m_fs.Write(m_rcv_buffer, 0, m_rcv_buffer.Length);
             }
-            
-
         }
 
-        public void SendTo(byte[] data, int data_len)
+        private void SendTo(byte[] data, int data_len)
         {
             m_sndsocket.SendTo(data, data_len, SocketFlags.None, m_remote_sndep);
+        }
+
+        public void LineEstablish()
+        {
+            byte[] data = new byte[1024];
+            string cmd = "AT1";
+            data = ASCIIEncoding.ASCII.GetBytes(cmd);
+            SendTo(data, data.Length);
+        }
+
+        public void LineShutDown()
+        {
+            byte[] data = new byte[1024];
+            string cmd = "AT2";
+            data = ASCIIEncoding.ASCII.GetBytes(cmd);
+            SendTo(data, data.Length);
         }
     }
 }
