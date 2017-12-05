@@ -33,7 +33,8 @@ namespace YHServer.YHLib
             m_rcvsocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             // 绑定本地端口
             IPEndPoint rcv_ep = new IPEndPoint(IPAddress.Any, src_rcvport);
-            m_rcvsocket.Bind(rcv_ep);
+            m_remote_rcvep = (EndPoint)rcv_ep;
+            m_rcvsocket.Bind(m_remote_rcvep);
 
             m_sndsocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             IPEndPoint snd_ep = new IPEndPoint(IPAddress.Any, src_sndport);
