@@ -58,7 +58,7 @@ void task_udpclient(void *p_arg)
             sin.sin_port = htons(ntohs(g_remote_sin.sin_port)-1);
             time_stamp = OSTimeGet();
 			
-			cnt = 50;
+			cnt = 500;
 			
 			wav_header_init(&wav_header, cnt*512+36, cnt*512);
 			
