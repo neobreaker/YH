@@ -6,6 +6,8 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.ComponentModel;
+using System.Media;
 
 
 namespace YHServer.YHLib
@@ -25,7 +27,9 @@ namespace YHServer.YHLib
         private Thread m_thread_play;
 
         // file
-        FileStream m_fs = null;
+        private FileStream m_fs = null;
+
+        private SoundPlayer m_sound_player = null;
 
         public  YHbuffer m_dgram_queue =  new YHbuffer(30);
 
@@ -75,19 +79,28 @@ namespace YHServer.YHLib
 
             m_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
             m_dgram_queue.Clear();
+
+            m_sound_player = new SoundPlayer(m_fs);
+
             LineEstablish();
 
             m_is_line_connected = true;
             m_thread_play = new Thread(ThreadDoPlay);
             m_thread_play.IsBackground = true;
             m_thread_play.Start();
+
+            m_sound_player.PlaySync();
         }
 
         public void ShutDown()
         {
+
+            m_sound_player = null;
+
             m_fs.Flush();
             m_fs.Close();
             m_fs = null;
+
 
             m_is_line_connected = false;
 
@@ -113,10 +126,14 @@ namespace YHServer.YHLib
             while (m_is_line_connected)
             {
                 e = m_dgram_queue.Dequeue();
-                if (m_fs != null && e.m_len > 0)
+                if(e.m_len > 0)
                 {
-                    m_fs.Write(e.m_data, 0, e.m_len);
+                    if (m_fs != null)
+                    {
+                        m_fs.Write(e.m_data, 0, e.m_len);
+                    }
                 }
+                
             }
         }
 
