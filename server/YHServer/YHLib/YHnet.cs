@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.ComponentModel;
 using System.Media;
+using NAudio.Wave;
 
 
 namespace YHServer.YHLib
@@ -29,7 +30,8 @@ namespace YHServer.YHLib
         // file
         private FileStream m_fs = null;
 
-        private SoundPlayer m_sound_player = null;
+        private IWavePlayer m_wavePlayer = null;
+        private BufferedWaveProvider m_wave_provider = null;
 
         public  YHbuffer m_dgram_queue =  new YHbuffer(30);
 
@@ -53,6 +55,12 @@ namespace YHServer.YHLib
             m_remote_rcvep = (EndPoint)rcv;
 
             m_rcv_buffer = new Byte[4096];
+
+            WaveFormat wf = new WaveFormat(8000, 2);
+            m_wavePlayer = new WaveOut();
+            m_wave_provider = new BufferedWaveProvider(wf);
+            m_wavePlayer.Init(m_wave_provider);
+            m_wavePlayer.Play();
 
             m_thread_rcv = new Thread(ThreadDoRecv);
             m_thread_rcv.IsBackground = true;
@@ -80,8 +88,6 @@ namespace YHServer.YHLib
             m_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
             m_dgram_queue.Clear();
 
-            m_sound_player = new SoundPlayer(m_fs);
-
             LineEstablish();
 
             m_is_line_connected = true;
@@ -89,14 +95,11 @@ namespace YHServer.YHLib
             m_thread_play.IsBackground = true;
             m_thread_play.Start();
 
-            m_sound_player.PlaySync();
+            
         }
 
         public void ShutDown()
         {
-
-            m_sound_player = null;
-
             m_fs.Flush();
             m_fs.Close();
             m_fs = null;
@@ -131,6 +134,7 @@ namespace YHServer.YHLib
                     if (m_fs != null)
                     {
                         m_fs.Write(e.m_data, 0, e.m_len);
+                        m_wave_provider.AddSamples(e.m_data, 0, e.m_len);
                     }
                 }
                 
