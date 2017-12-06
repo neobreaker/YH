@@ -13,8 +13,15 @@ namespace YHServer.YHLib
 
         public YHElement(byte[] data, int len)
         {
-            m_data = new byte[2048];
-            data.CopyTo(m_data, len);
+            if (data != null)
+            {
+                m_data = new byte[4096];
+                Array.Copy(data, m_data, len);
+            }
+            else
+            {
+                m_data = null;
+            }
             m_len = len;
         }
     }
@@ -48,6 +55,11 @@ namespace YHServer.YHLib
             if (m_data_queue.Count != 0)
                 return m_data_queue.Dequeue();
             return e;
+        }
+
+        public void Clear()
+        {
+            m_data_queue.Clear();
         }
     }
 }

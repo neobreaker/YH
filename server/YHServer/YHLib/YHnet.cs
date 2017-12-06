@@ -27,7 +27,7 @@ namespace YHServer.YHLib
         // file
         FileStream m_fs = null;
 
-        public  YHbuffer m_dgram_queue =  new YHbuffer(3);
+        public  YHbuffer m_dgram_queue =  new YHbuffer(30);
 
         private void YHnetSetup(string dst_ip, int dst_rcvport, int dst_sndport, int src_rcvport, int src_sndport)
         {
@@ -74,7 +74,7 @@ namespace YHServer.YHLib
             string filename = string.Format("{0:yyMMdd HHmmss}", dt) +".wav";
 
             m_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
-
+            m_dgram_queue.Clear();
             LineEstablish();
 
             m_is_line_connected = true;
