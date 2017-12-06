@@ -29,6 +29,7 @@ namespace YHServer.YHLib
 
         // file
         private FileStream m_fs = null;
+        private bool m_is_save = false;
 
         private IWavePlayer m_wavePlayer = null;
         private BufferedWaveProvider m_wave_provider = null;
@@ -80,13 +81,22 @@ namespace YHServer.YHLib
             YHnetSetup(dst_ip, dst_rcvport, dst_sndport, src_rcvport, src_sndport);
         }
 
+        public void YHSave(bool is_save)
+        {
+            this.m_is_save = is_save;
+        }
+
         public void Start()
         {
             DateTime dt = DateTime.Now;
             string path = "E:\\";
             string filename = string.Format("{0:yyMMdd HHmmss}", dt) +".wav";
 
-            m_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
+            if (m_is_save)
+            {
+                m_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
+            }
+
             m_dgram_queue.Clear();
 
             LineEstablish();
@@ -101,10 +111,13 @@ namespace YHServer.YHLib
 
         public void ShutDown()
         {
-            m_fs.Flush();
-            m_fs.Close();
+            if (m_is_save)
+            {
+                m_fs.Flush();
+                m_fs.Close();
+                
+            }
             m_fs = null;
-
 
             m_is_line_connected = false;
 
@@ -135,10 +148,9 @@ namespace YHServer.YHLib
                     if (m_fs != null)
                     {
                         m_fs.Write(e.m_data, 0, e.m_len);
-                        m_wave_provider.AddSamples(e.m_data, 0, e.m_len);
                     }
+                    m_wave_provider.AddSamples(e.m_data, 0, e.m_len);
                 }
-                
             }
         }
 
