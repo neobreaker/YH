@@ -64,7 +64,7 @@ void task_udpclient(void *p_arg)
 			
 			sendto(sock_fd, &wav_header, sizeof(wav_header), 0, (struct sockaddr *)&sin, sizeof(sin));
 			
-            while(cnt)
+            while(1)
             {
 
 				w=VS_RD_Reg(SPI_HDAT1);

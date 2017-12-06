@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.ComponentModel;
-using System.Media;
+
 using NAudio.Wave;
 
 
@@ -56,7 +56,8 @@ namespace YHServer.YHLib
 
             m_rcv_buffer = new Byte[4096];
 
-            WaveFormat wf = new WaveFormat(8000, 2);
+            
+            WaveFormat wf = new WaveFormat(8000, 16, 1);
             m_wavePlayer = new WaveOut();
             m_wave_provider = new BufferedWaveProvider(wf);
             m_wavePlayer.Init(m_wave_provider);
