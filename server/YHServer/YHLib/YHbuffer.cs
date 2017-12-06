@@ -5,29 +5,50 @@ using System.Text;
 
 namespace YHServer.YHLib
 {
+
+    struct YHElement
+    {
+        public byte[] m_data;
+        public int m_len;
+
+        public YHElement(byte[] data, int len)
+        {
+            m_data = new byte[2048];
+            data.CopyTo(m_data, len);
+            m_len = len;
+        }
+    }
+
     class YHbuffer
     {
         private int m_blocks;
-        private Queue<byte[]> m_data_queue;
+        private Queue<YHElement> m_data_queue;
 
         public YHbuffer(int blocks)
         {
             m_blocks = blocks;
 
-            m_data_queue = new Queue<byte[]>(m_blocks);
+            m_data_queue = new Queue<YHElement>(m_blocks);
 
         }
 
-        public void Enqueue(byte[] data)
+        public void Enqueue(byte[] data, int len)
         {
+            YHElement e = new YHElement(data, len);
+            
             if (m_data_queue.Count == m_blocks)
                 m_data_queue.Dequeue();
-            m_data_queue.Enqueue(data);
+            m_data_queue.Enqueue(e);
         }
 
-        public byte[] Dequeue()
+        public YHElement Dequeue()
         {
-            return m_data_queue.Dequeue();
+            YHElement e = new YHElement(null, 0);
+
+            if (m_data_queue.Count != 0)
+                return m_data_queue.Dequeue();
+            return e;
         }
     }
 }
+;

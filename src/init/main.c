@@ -21,7 +21,7 @@ void bsp_init()
 	FSMC_SRAM_Init();
 	ccdebug_port_init(9600);
 	VS_Init();
-	VS_HD_Reset();
+	VS_Sine_Test();
 }
 
 int main(void)

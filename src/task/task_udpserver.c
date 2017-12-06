@@ -41,9 +41,9 @@ void task_udpserver(void *p_arg)
 	
 	while(1)
 	{
-		ret = recvfrom(sock_fd, data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&g_remote_sin, &sin_len);
-		parse_AT(data_buffer, RCV_BUFFER_SIZE);
-		if(is_line_established)
+		recvfrom(sock_fd, data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&g_remote_sin, &sin_len);
+		ret = parse_AT(data_buffer, RCV_BUFFER_SIZE);
+		if(ret && is_line_established)
 		{
 			OSSemPost(sem_vs1053async);
 		}
@@ -58,7 +58,8 @@ void task_udpserver(void *p_arg)
 	
 }
 
-void parse_AT(u8* buffer, int len)
+//return 0 : NOT AT  1: AT
+int parse_AT(u8* buffer, int len)
 {
 	u8 cmd = 0;
 	if(buffer[0] == 'A' && buffer[1] == 'T')
@@ -74,7 +75,9 @@ void parse_AT(u8* buffer, int len)
 			is_line_established = 0;
 			break;
 		}
+		return 1;
 	}
+	return 0;
 }
 
 

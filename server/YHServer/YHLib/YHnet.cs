@@ -17,13 +17,17 @@ namespace YHServer.YHLib
         private EndPoint m_remote_rcvep = null;
         private EndPoint m_remote_sndep = null;
 
+        private bool m_is_line_connected = false;
+
         private Thread m_thread_rcv;
         private byte[] m_rcv_buffer;
+
+        private Thread m_thread_play;
 
         // file
         FileStream m_fs = null;
 
-        public  YHbuffer dgram_queue =  new YHbuffer(3);
+        public  YHbuffer m_dgram_queue =  new YHbuffer(3);
 
         private void YHnetSetup(string dst_ip, int dst_rcvport, int dst_sndport, int src_rcvport, int src_sndport)
         {
@@ -72,6 +76,11 @@ namespace YHServer.YHLib
             m_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
 
             LineEstablish();
+
+            m_is_line_connected = true;
+            m_thread_play = new Thread(ThreadDoPlay);
+            m_thread_play.IsBackground = true;
+            m_thread_play.Start();
         }
 
         public void ShutDown()
@@ -80,19 +89,34 @@ namespace YHServer.YHLib
             m_fs.Close();
             m_fs = null;
 
+            m_is_line_connected = false;
+
             LineShutDown();
         }
 
         private void ThreadDoRecv()
         {
+            int rcv_len = 0;
             while (true)
             {
-                m_rcvsocket.ReceiveFrom(m_rcv_buffer, SocketFlags.None, ref m_remote_rcvep);
+                rcv_len = m_rcvsocket.ReceiveFrom(m_rcv_buffer, SocketFlags.None, ref m_remote_rcvep);
 
-                dgram_queue.Enqueue(m_rcv_buffer);
+                m_dgram_queue.Enqueue(m_rcv_buffer, rcv_len);
 
-                if(m_fs != null)
-                    m_fs.Write(m_rcv_buffer, 0, m_rcv_buffer.Length);
+                
+            }
+        }
+
+        private void ThreadDoPlay()
+        {
+            YHElement e ;
+            while (m_is_line_connected)
+            {
+                e = m_dgram_queue.Dequeue();
+                if (m_fs != null && e.m_len > 0)
+                {
+                    m_fs.Write(e.m_data, 0, e.m_len);
+                }
             }
         }
 

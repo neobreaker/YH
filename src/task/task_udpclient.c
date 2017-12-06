@@ -22,7 +22,7 @@ void task_udpclient(void *p_arg)
     int sock_fd;
     u8* snddata;
     int i = 0;
-    u16 hda1 = 0;
+    u16 w = 0;
     u32 idx = 0;
 	u32 cnt = 0;
 	WaveHeaderStruct wav_header;
@@ -47,6 +47,8 @@ void task_udpclient(void *p_arg)
         return ;
     }
 
+	recoder_enter_rec_mode(1024*4);
+	while(VS_RD_Reg(SPI_HDAT1)>>8);
     while(1)
     {
         OSSemPend(sem_vs1053async, 0, &_err);
@@ -55,31 +57,30 @@ void task_udpclient(void *p_arg)
             sin.sin_addr.s_addr = g_remote_sin.sin_addr.s_addr;
             sin.sin_port = htons(ntohs(g_remote_sin.sin_port)-1);
             time_stamp = OSTimeGet();
-
-			cnt = 100000;
+			
+			cnt = 50;
 			
 			wav_header_init(&wav_header, cnt*512+36, cnt*512);
-	
-			recoder_enter_rec_mode(1024*4);
 			
 			sendto(sock_fd, &wav_header, sizeof(wav_header), 0, (struct sockaddr *)&sin, sizeof(sin));
 			
             while(cnt)
             {
-                hda1 = VS_RD_Reg(SPI_HDAT1);
-					
-                if((hda1>=256)&&(hda1<896))
+
+				w=VS_RD_Reg(SPI_HDAT1);
+                if((w>=256)&&(w<896))
                 {
-                    idx = 0;
-                    while(idx<512)
+                    idx=0;
+                    while(idx<512)  //一次读取512字节
                     {
-                        hda1 = VS_RD_Reg(SPI_HDAT0);
-                        snddata[idx++] = hda1&0XFF;
-                        snddata[idx++] = hda1>>8;
+                        w=VS_RD_Reg(SPI_HDAT0);
+                        snddata[idx++]=w&0XFF;
+                        snddata[idx++]=w>>8;
                     }
                     sendto(sock_fd, snddata, 512, 0, (struct sockaddr *)&sin, sizeof(sin));
 					cnt--;
                 }
+			
 
 				if(!is_line_established)		// 通讯结束
 					break;

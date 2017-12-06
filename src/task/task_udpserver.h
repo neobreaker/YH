@@ -9,6 +9,6 @@
 #define AT_LINE_SHUTDOWN		0X32
 
 void task_udpserver(void *p_arg);
-void parse_AT(u8* buffer, int len);
+int parse_AT(u8* buffer, int len);
 
 #endif

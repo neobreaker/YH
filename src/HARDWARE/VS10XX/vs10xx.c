@@ -1,6 +1,5 @@
 #include "vs10xx.h"
 #include "delay.h"
-#include "mysys.h"
 //////////////////////////////////////////////////////////////////////////////////
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK战舰STM32开发板V3
@@ -14,17 +13,6 @@
 //All rights reserved
 //////////////////////////////////////////////////////////////////////////////////
 
-
-//VS1053的WAV录音有bug,这个plugin可以修正这个问题 							    
-const u16 wav_plugin[40]=/* Compressed plugin */ 
-{ 
-0x0007, 0x0001, 0x8010, 0x0006, 0x001c, 0x3e12, 0xb817, 0x3e14, /* 0 */ 
-0xf812, 0x3e01, 0xb811, 0x0007, 0x9717, 0x0020, 0xffd2, 0x0030, /* 8 */ 
-0x11d1, 0x3111, 0x8024, 0x3704, 0xc024, 0x3b81, 0x8024, 0x3101, /* 10 */ 
-0x8024, 0x3b81, 0x8024, 0x3f04, 0xc024, 0x2808, 0x4800, 0x36f1, /* 18 */ 
-0x9811, 0x0007, 0x0001, 0x8028, 0x0006, 0x0002, 0x2a00, 0x040e,  
-};
-
 //VS10XX默认设置参数
 _vs10xx_obj vsset=
 {
@@ -36,18 +24,6 @@ _vs10xx_obj vsset=
     0,      //空间效果
     1,      //板载喇叭默认打开.
 };
-
-////////////////////////////////////////////////////////////////////////////////
-//移植时候的接口
-
-void SPI1_SetSpeed(u8 SpeedSet)
-{
-    assert_param(IS_SPI_BAUDRATE_PRESCALER(SPI_BaudRatePrescaler));
-    SPI1->CR1&=0XFFC7;
-    SPI1->CR1|=SpeedSet;
-    SPI_Cmd(SPI1,ENABLE);
-}
-
 
 //SPIx 读写一个字节
 //TxData:要写入的字节
@@ -69,6 +45,14 @@ u8 SPI1_ReadWriteByte(u8 TxData)
         if(retry>200)return 0;
     }
     return SPI_I2S_ReceiveData(SPI1); //返回通过SPIx最近接收的数据
+}
+
+void SPI1_SetSpeed(u8 SpeedSet)
+{
+    assert_param(IS_SPI_BAUDRATE_PRESCALER(SPI_BaudRatePrescaler));
+    SPI1->CR1&=0XFFC7;
+    SPI1->CR1|=SpeedSet;
+    SPI_Cmd(SPI1,ENABLE);
 }
 
 
@@ -100,10 +84,40 @@ void SPI1_Init(void)
 
     SPI_Cmd(SPI1, ENABLE); //使能SPI外设
 
-    SPI1_ReadWriteByte(0xff);//启动传输
+    //SPI2_ReadWriteByte(0xff);//启动传输
 }
 
 
+//VS1053的WAV录音有bug,这个plugin可以修正这个问题
+const u16 wav_plugin[40]=/* Compressed plugin */
+{
+    0x0007, 0x0001, 0x8010, 0x0006, 0x001c, 0x3e12, 0xb817, 0x3e14, /* 0 */
+    0xf812, 0x3e01, 0xb811, 0x0007, 0x9717, 0x0020, 0xffd2, 0x0030, /* 8 */
+    0x11d1, 0x3111, 0x8024, 0x3704, 0xc024, 0x3b81, 0x8024, 0x3101, /* 10 */
+    0x8024, 0x3b81, 0x8024, 0x3f04, 0xc024, 0x2808, 0x4800, 0x36f1, /* 18 */
+    0x9811, 0x0007, 0x0001, 0x8028, 0x0006, 0x0002, 0x2a00, 0x040e,
+};
+//激活PCM 录音模式
+//agc:0,自动增益.1024相当于1倍,512相当于0.5倍,最大值65535=64倍
+void recoder_enter_rec_mode(u16 agc)
+{
+    //如果是IMA ADPCM,采样率计算公式如下:
+    //采样率=CLKI/256*d;
+    //假设d=0,并2倍频,外部晶振为12.288M.那么Fc=(2*12288000)/256*6=16Khz
+    //如果是线性PCM,采样率直接就写采样值
+    VS_WR_Cmd(SPI_BASS,0x0000);
+    VS_WR_Cmd(SPI_AICTRL0,8000);    //设置采样率,设置为8Khz
+    VS_WR_Cmd(SPI_AICTRL1,agc);     //设置增益,0,自动增益.1024相当于1倍,512相当于0.5倍,最大值65535=64倍
+    VS_WR_Cmd(SPI_AICTRL2,0);       //设置增益最大值,0,代表最大值65536=64X
+    VS_WR_Cmd(SPI_AICTRL3,6);       //左通道(MIC单声道输入)
+    VS_WR_Cmd(SPI_CLOCKF,0X2000);   //设置VS10XX的时钟,MULT:2倍频;ADD:不允许;CLK:12.288Mhz
+    VS_WR_Cmd(SPI_MODE,0x1804);     //MIC,录音激活
+    delay_ms(5);                    //等待至少1.35ms
+    VS_Load_Patch((u16*)wav_plugin,40);//VS1053的WAV录音需要patch
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//移植时候的接口
 //data:要写入的数据
 //返回值:读到的数据
 u8 VS_SPI_ReadWriteByte(u8 data)
@@ -181,10 +195,8 @@ u8 VS_HD_Reset(void)
         delay_us(50);
     };
     delay_ms(20);
-    if(retry>=200)
-		return 1;
-    else 
-		return 0;
+    if(retry>=200)return 1;
+    else return 0;
 }
 //正弦测试
 void VS_Sine_Test(void)
@@ -558,24 +570,10 @@ void VS_Set_All(void)
     VS_SPK_Set(vsset.speakersw);    //控制板载喇叭状态
 }
 
-//激活PCM 录音模式
-//agc:0,自动增益.1024相当于1倍,512相当于0.5倍,最大值65535=64倍		  
-void recoder_enter_rec_mode(u16 agc)
-{
-	//如果是IMA ADPCM,采样率计算公式如下:
- 	//采样率=CLKI/256*d;	
-	//假设d=0,并2倍频,外部晶振为12.288M.那么Fc=(2*12288000)/256*6=16Khz
-	//如果是线性PCM,采样率直接就写采样值 
-   	VS_WR_Cmd(SPI_BASS,0x0000);    
- 	VS_WR_Cmd(SPI_AICTRL0,8000);	//设置采样率,设置为8Khz
- 	VS_WR_Cmd(SPI_AICTRL1,agc);		//设置增益,0,自动增益.1024相当于1倍,512相当于0.5倍,最大值65535=64倍	
- 	VS_WR_Cmd(SPI_AICTRL2,0);		//设置增益最大值,0,代表最大值65536=64X
- 	VS_WR_Cmd(SPI_AICTRL3,6);		//左通道(MIC单声道输入)
-	VS_WR_Cmd(SPI_CLOCKF,0X2000);	//设置VS10XX的时钟,MULT:2倍频;ADD:不允许;CLK:12.288Mhz
-	VS_WR_Cmd(SPI_MODE,0x1804);		//MIC,录音激活    
- 	delay_ms(5);					//等待至少1.35ms 
- 	VS_Load_Patch((u16*)wav_plugin,40);//VS1053的WAV录音需要patch
-}
+
+
+
+
 
 
 

@@ -5,8 +5,8 @@
 #define STARTUP_TASK_PRIO                      4
 
 #define TASK_TCPSERVER_PRIO                    15
-#define TASK_UDPSERVER_PRIO                    16
-#define TASK_UDPCLIENT_PRIO                    17
+#define TASK_UDPCLIENT_PRIO                    16
+#define TASK_UDPSERVER_PRIO                    17
 
 /* task stack size */
 #define STARTUP_TASK_STK_SIZE                  80
