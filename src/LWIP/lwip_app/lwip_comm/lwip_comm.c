@@ -67,6 +67,8 @@ extern u32 memp_get_memorysize(void);   //在memp.c里面定义
 extern u8_t *memp_memory;               //在memp.c里面定义.
 extern u8_t *ram_heap;                  //在mem.c里面定义.
 
+extern u8 g_enc28j60_mac[6];
+
 //DM9000数据接收处理任务
 void lwip_netcard_input_task(void *pdata)
 {
@@ -82,10 +84,10 @@ u8 lwip_comm_mem_malloc(void)
     u32 mempsize;
 	u32 ramheapsize; 
 	
-	mempsize = memp_get_memorysize();			//μ?μ?memp_memoryêy×é′óD?
-	memp_memory = pvPortMalloc(mempsize);	//?amemp_memoryéê???ú′?
+	mempsize = memp_get_memorysize();		
+	memp_memory = pvPortMalloc(mempsize);	
 
-	ramheapsize=LWIP_MEM_ALIGN_SIZE(MEM_SIZE)+2*LWIP_MEM_ALIGN_SIZE(4*3)+MEM_ALIGNMENT;//μ?μ?ram heap′óD?
+	ramheapsize=LWIP_MEM_ALIGN_SIZE(MEM_SIZE)+2*LWIP_MEM_ALIGN_SIZE(4*3)+MEM_ALIGNMENT;
 	ram_heap = pvPortMalloc(ramheapsize); //为ram_heap申请内存
 
     TCPIP_THREAD_TASK_STK         = pvPortMalloc(TCPIP_THREAD_STACKSIZE*4);           //给内核任务申请堆栈
@@ -129,12 +131,12 @@ void lwip_comm_default_ip_set(__lwip_dev *lwipx)
     lwipx->remoteip[2]=3;
     lwipx->remoteip[3]=106;
     //MAC地址设置(高三字节固定为:2.0.0,低三字节用STM32唯一ID)
-    lwipx->mac[0]=2;
-    lwipx->mac[1]=0;
-    lwipx->mac[2]=0;
-    lwipx->mac[3]=1;
-    lwipx->mac[4]=2;
-    lwipx->mac[5]=3;
+    lwipx->mac[0]=g_enc28j60_mac[0];
+    lwipx->mac[1]=g_enc28j60_mac[1];
+    lwipx->mac[2]=g_enc28j60_mac[2];
+    lwipx->mac[3]=g_enc28j60_mac[3];
+    lwipx->mac[4]=g_enc28j60_mac[4];
+    lwipx->mac[5]=g_enc28j60_mac[5];
     //默认本地IP为:192.168.1.30
     lwipx->ip[0]=192;
     lwipx->ip[1]=168;

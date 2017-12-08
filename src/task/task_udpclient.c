@@ -78,7 +78,7 @@ void task_udpclient(void *p_arg)
                         snddata[idx++]=w>>8;
                     }
                     sendto(sock_fd, snddata, 512, 0, (struct sockaddr *)&sin, sizeof(sin));
-					cnt--;
+					//cnt--;
                 }
 			
 

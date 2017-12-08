@@ -11,6 +11,8 @@
 //版本：V1.0
 //////////////////////////////////////////////////////////////////////////////////
 
+u8 g_enc28j60_mac[6] = {0x2, 0x0 , 0x0, 0x1, 0x2, 0x3};
+
 extern OS_EVENT* sem_enc28j60input;
 extern OS_EVENT* sem_enc28j60lock;
 
@@ -63,8 +65,8 @@ void ENC28J60_SPI2_Init(void)
 {
     SPI_InitTypeDef  SPI_InitStructure;
     GPIO_InitTypeDef  GPIO_InitStructure;
-    EXTI_InitTypeDef EXTI_InitStructure;
-    NVIC_InitTypeDef NVIC_InitStructure;
+//    EXTI_InitTypeDef EXTI_InitStructure;
+//    NVIC_InitTypeDef NVIC_InitStructure;
     RCC_APB1PeriphClockCmd( RCC_APB1Periph_SPI2,  ENABLE );//SPI2时钟使能
     RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOD|RCC_APB2Periph_GPIOG|RCC_APB2Periph_AFIO, ENABLE );//PORTB,D,G时钟使能
 
@@ -128,7 +130,7 @@ void ENC28J60_SPI2_Init(void)
 
 void EXTI9_5_IRQHandler(void)
 {
-    u8 reg = 0;
+
 #if OS_CRITICAL_METHOD == 3
     OS_CPU_SR  cpu_sr = 0;
 #endif
@@ -441,6 +443,7 @@ u8 ENC28J60_Init(u8* macaddr)
     //1 = 通过当前过滤器的数据包将被写入接收缓冲器
     //0 = 忽略所有接收的数据包
     ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON1,ECON1_RXEN);
+	
     if(ENC28J60_Read(MAADR5)== macaddr[0])
         return 0;//初始化成功
     else
@@ -459,6 +462,7 @@ u8 ENC28J60_Get_EREVID(void)
 static u8 eir = 0;
 static u8 estat = 0;
 static u8 econ1 = 0;
+static u8 ptk_cnt = 0;
 //通过ENC28J60发送数据包到网络
 //len:数据包大小
 //packet:数据包
@@ -520,42 +524,42 @@ void ENC28J60_Packet_Send(u32 len,u8* packet)
         OSSemPost(sem_enc28j60lock);
     }
 }
+
+
+static u32 LastPacketPtr;
+
 //从网络获取一个数据包内容
 //maxlen:数据包最大允许接收长度
 //packet:数据包缓存区
 //返回值:收到的数据包长度(字节)
 u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
 {
+
     u32 rxstat;
     u32 len;
     u8 err = OS_ERR_NONE;
-    u8 reg = 0;
+//    u8 reg = 0;
     OSSemPend(sem_enc28j60lock, 0, &err);
     if(err == OS_ERR_NONE)
     {
-        reg = ENC28J60_Read(EPKTCNT);
-        if(reg == 0)                        //是否收到数据包
+        ptk_cnt = ENC28J60_Read(EPKTCNT);
+        if(ptk_cnt == 0)                        //是否收到数据包
         {
 			
             estat = ENC28J60_Read(ESTAT);
             eir = ENC28J60_Read(EIR);
             econ1 = ENC28J60_Read(ECON1);
-			
-            if(eir & EIR_RXERIF)
-            {
-                //Errata: Transmit Logic reset
-				NextPacketPtr = 0;
-				ENC28J60_Write(ERDPTL,(NextPacketPtr));             //设置接收缓冲器读指针
-        		ENC28J60_Write(ERDPTH,(NextPacketPtr)>>8);
-				
-                ENC28J60_Write(ERXRDPTL,RXSTART_INIT&0xFF);
-			    ENC28J60_Write(ERXRDPTH,RXSTART_INIT>>8);
-				ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON2,ECON2_PKTDEC);
-				
-		        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_CLR, EIR, EIR_RXERIF);
-				
-            }
 
+			
+            if(!(econ1 & ECON1_RXEN) && (estat & ESTAT_CLKRDY))
+            {
+				ENC28J60_Init(g_enc28j60_mac);
+				estat = ENC28J60_Read(ESTAT);
+				eir = ENC28J60_Read(EIR);
+				econ1 = ENC28J60_Read(ECON1);
+            }
+			
+			
             OSSemPost(sem_enc28j60lock);
             return 0;
         }
@@ -563,34 +567,49 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
         ENC28J60_Write(ERDPTL,(NextPacketPtr));             //设置接收缓冲器读指针
         ENC28J60_Write(ERDPTH,(NextPacketPtr)>>8);
 
+		LastPacketPtr = NextPacketPtr;
+		
         NextPacketPtr=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);    // 读下一个包的指针
         NextPacketPtr|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
 
-        len=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);              //读包的长度
-        len|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
+		if(NextPacketPtr < RXSTART_INIT || NextPacketPtr > RXSTOP_INIT)		//invalid address
+		{
+			estat = ENC28J60_Read(ESTAT);
+            eir = ENC28J60_Read(EIR);
+            econ1 = ENC28J60_Read(ECON1);
+			ENC28J60_Init(g_enc28j60_mac);
+			estat = ENC28J60_Read(ESTAT);
+            eir = ENC28J60_Read(EIR);
+            econ1 = ENC28J60_Read(ECON1);
+		}
+		else
+		{
+	        len=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);              //读包的长度
+	        len|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
 
-        len-=4;                                                     //去掉CRC计数
+	        len-=4;                                                     //去掉CRC计数
 
-        rxstat=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);           //读取接收状态
-        rxstat|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
+	        rxstat=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0);           //读取接收状态
+	        rxstat|=ENC28J60_Read_Op(ENC28J60_READ_BUF_MEM,0)<<8;
 
-        if (len>maxlen-1)
-            len=maxlen-1;                                           //限制接收长度
+	        if (len>maxlen-1)
+	            len=maxlen-1;                                           //限制接收长度
 
-        //检查CRC和符号错误
-        // ERXFCON.CRCEN为默认设置,一般我们不需要检查.
-        if((rxstat&0x80) == 0)
-            len = 0;                                    //无效
-        else
-            ENC28J60_Read_Buf(len,packet);              //从接收缓冲器中复制数据包
-
-        //RX读指针移动到下一个接收到的数据包的开始位置
-        //并释放我们刚才读出过的内存
-        ENC28J60_Write(ERXRDPTL,(NextPacketPtr));
-        ENC28J60_Write(ERXRDPTH,(NextPacketPtr)>>8);
-
-        //递减数据包计数器标志我们已经得到了这个包
-        ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON2,ECON2_PKTDEC);
+	        //检查CRC和符号错误
+	        // ERXFCON.CRCEN为默认设置,一般我们不需要检查.
+	        if((rxstat&0x80) == 0)
+	            len = 0;                                    //无效
+	        else
+	            ENC28J60_Read_Buf(len,packet);              //从接收缓冲器中复制数据包
+	            
+	        //RX读指针移动到下一个接收到的数据包的开始位置
+	        //并释放我们刚才读出过的内存
+	        ENC28J60_Write(ERXRDPTL,(NextPacketPtr));
+	        ENC28J60_Write(ERXRDPTH,(NextPacketPtr)>>8);
+			
+			//递减数据包计数器标志我们已经得到了这个包
+        	ENC28J60_Write_Op(ENC28J60_BIT_FIELD_SET,ECON2,ECON2_PKTDEC);
+		}
 
         OSSemPost(sem_enc28j60lock);
     }
