@@ -8,11 +8,13 @@
 #include "lwip_comm.h"
 #include "delay.h"
 #include "ccdebug.h"
-#include "vs10xx.h"
+#include "vs10xx_port.h"
 
 static OS_STK startup_task_stk[STARTUP_TASK_STK_SIZE];
 
 OS_EVENT* sem_vs1053async;			//TEST 
+
+vs10xx_cfg_t g_vs10xx_rec_cfg;
 
 void bsp_init()
 {
@@ -20,8 +22,7 @@ void bsp_init()
 	delay_init();
 	FSMC_SRAM_Init();
 	ccdebug_port_init(9600);
-	VS_Init();
-	VS_Sine_Test();
+	vs10xx_cfg_setup(&g_vs10xx_rec_cfg);
 }
 
 int main(void)

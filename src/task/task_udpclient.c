@@ -5,12 +5,13 @@
 #include "lwip/err.h"
 #include "lib_mem.h"
 #include "task_udpclient.h"
-#include "vs10xx.h"
+#include "vs10xx_port.h"
 #include "wav.h"
 
 extern OS_EVENT* sem_vs1053async;
 extern u8 is_line_established;
 extern struct sockaddr_in g_remote_sin;
+extern vs10xx_cfg_t g_vs10xx_rec_cfg;
 
 static u32 time_stamp = 0, time_elapse = 0;
 void task_udpclient(void *p_arg)
@@ -47,8 +48,8 @@ void task_udpclient(void *p_arg)
         return ;
     }
 
-	recoder_enter_rec_mode(1024*4);
-	while(VS_RD_Reg(SPI_HDAT1)>>8);
+	recoder_enter_rec_mode(&g_vs10xx_rec_cfg, 1024*4);
+	while(VS_RD_Reg(&g_vs10xx_rec_cfg, SPI_HDAT1)>>8);
     while(1)
     {
         OSSemPend(sem_vs1053async, 0, &_err);
@@ -67,13 +68,13 @@ void task_udpclient(void *p_arg)
             while(1)
             {
 
-				w=VS_RD_Reg(SPI_HDAT1);
+				w=VS_RD_Reg(&g_vs10xx_rec_cfg, SPI_HDAT1);
                 if((w>=256)&&(w<896))
                 {
                     idx=0;
                     while(idx<512)  //一次读取512字节
                     {
-                        w=VS_RD_Reg(SPI_HDAT0);
+                        w=VS_RD_Reg(&g_vs10xx_rec_cfg, SPI_HDAT0);
                         snddata[idx++]=w&0XFF;
                         snddata[idx++]=w>>8;
                     }
