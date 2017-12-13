@@ -568,9 +568,19 @@
               <FilePath>.\src\HARDWARE\USART\debug_usart.c</FilePath>
             </File>
             <File>
-              <FileName>vs10xx.c</FileName>
+              <FileName>vs10xx_port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\HARDWARE\VS10XX\vs10xx.c</FilePath>
+              <FilePath>.\src\HARDWARE\VS10XX\vs10xx_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>vs10xx_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\HARDWARE\VS10XX\vs10xx_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>vs10xx_play_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\HARDWARE\VS10XX\vs10xx_play_port.c</FilePath>
             </File>
           </Files>
         </Group>
