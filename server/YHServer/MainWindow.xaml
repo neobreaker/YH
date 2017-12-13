@@ -4,5 +4,6 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Button Name="BtnConnect"  Width="100" Height="80" Content="建立连接" Click="BtnConnect_Click"></Button>
+        
     </Grid>
 </Window>

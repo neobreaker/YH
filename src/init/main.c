@@ -24,7 +24,7 @@ void bsp_init()
 	NVIC_Configuration();
 	delay_init();
 	FSMC_SRAM_Init();
-//	ccdebug_port_init(9600);
+	ccdebug_port_init(9600);
 	vs10xx_cfg_setup(&g_vs10xx_rec_cfg);
 	
 	vs10xx_play_cfg_setup(&g_vs10xx_play_cfg);

@@ -508,3 +508,4 @@ void recoder_enter_rec_mode(vs10xx_cfg_t *cfg, u16 agc)
     VS_Load_Patch(cfg, (u16*)wav_plugin,40);//VS1053µÄWAVÂ¼ÒôÐèÒªpatch
 }
 
+

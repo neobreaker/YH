@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 using NAudio.Wave;
 
@@ -31,10 +32,16 @@ namespace YHServer.YHLib
         private FileStream m_fs = null;
         private bool m_is_save = false;
 
+        private FileStream m_rec_fs = null;
+        private bool m_is_rec_save = true;
+
         private IWavePlayer m_wavePlayer = null;
         private BufferedWaveProvider m_wave_provider = null;
 
-        public  YHbuffer m_dgram_queue =  new YHbuffer(30);
+        private IWaveIn m_wave_in = null;
+        private WaveFileWriter m_wave_writer = null;
+
+        public  YHbuffer m_dgram_queue =  new YHbuffer(3);
 
         private void YHnetSetup(string dst_ip, int dst_rcvport, int dst_sndport, int src_rcvport, int src_sndport)
         {
@@ -106,6 +113,13 @@ namespace YHServer.YHLib
             m_thread_play.IsBackground = true;
             m_thread_play.Start();
 
+            m_wave_in = new WaveIn { WaveFormat = new WaveFormat(8000, 1) };//设置码率
+            m_wave_in.DataAvailable += waveIn_DataAvailable;
+            m_wave_in.RecordingStopped += OnRecordingStopped;
+
+            m_wave_writer = new WaveFileWriter("E:///REC/test.wav", m_wave_in.WaveFormat);
+
+            m_wave_in.StartRecording();
             
         }
 
@@ -120,6 +134,13 @@ namespace YHServer.YHLib
             m_fs = null;
 
             m_is_line_connected = false;
+
+            StopRecording();
+            if (m_is_rec_save)
+            {
+                m_rec_fs.Flush();
+                m_rec_fs.Close();
+            }
 
             LineShutDown();
         }
@@ -173,6 +194,56 @@ namespace YHServer.YHLib
             string cmd = "AT2";
             data = ASCIIEncoding.ASCII.GetBytes(cmd);
             SendTo(data, data.Length);
+        }
+
+        public void StopRecording()
+        {
+            m_wave_in.StopRecording();
+            m_wave_in.Dispose();
+        }
+
+        private void waveIn_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            DateTime dt = DateTime.Now;
+            string path = "E:\\";
+            string filename = string.Format("{0:yyMMdd HHmmss}", dt) + ".wav";
+
+            if (m_is_rec_save)
+            {
+                if (m_rec_fs == null)
+                {
+                    m_rec_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
+                    WavHeader wh = new WavHeader();
+                    byte[] temp1 = wh.GetWavHeader();
+                    byte[] temp = new byte[44];
+                    Array.Copy(temp1, 0, temp, 0, temp1.Length);
+                    BinaryWriter bw = new BinaryWriter(m_rec_fs);
+                    bw.Write(temp);
+                    bw.Flush();
+                    
+                }
+                m_rec_fs.Write(e.Buffer, 0, e.BytesRecorded);
+            }
+            m_wave_writer.Write(e.Buffer, 0, e.BytesRecorded);
+            //int secondsRecorded = (int)(m_wave_writer.Length / m_wave_writer.WaveFormat.AverageBytesPerSecond);//录音时间获取
+            
+        }
+
+        private void OnRecordingStopped(object sender, StoppedEventArgs e)
+        {
+            if (m_wave_in != null) // 关闭录音对象
+            {
+                m_wave_in.Dispose();
+                m_wave_in = null;
+            }
+
+            
+            if (m_wave_writer != null)//关闭文件流
+            {
+                m_wave_writer.Close();
+                m_wave_writer = null;
+            }
+            
         }
     }
 }

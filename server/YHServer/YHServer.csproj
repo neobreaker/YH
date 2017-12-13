@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="YHLib\WavHeader.cs" />
     <Compile Include="YHLib\YHbuffer.cs" />
     <Compile Include="YHLib\YHnet.cs" />
     <Page Include="MainWindow.xaml">
