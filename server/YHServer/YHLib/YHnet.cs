@@ -17,9 +17,11 @@ namespace YHServer.YHLib
     class YHnet
     {
         private Socket m_rcvsocket = null;
-        private Socket m_sndsocket = null;
+        //private Socket m_sndsocket = null;
         private EndPoint m_remote_rcvep = null;
-        private EndPoint m_remote_sndep = null;
+        private IPEndPoint m_remote_sndep = null;
+
+        private UdpClient m_udpc_send = null; 
 
         private bool m_is_line_rcv = false;
         private bool m_is_line_snd = false;
@@ -56,12 +58,14 @@ namespace YHServer.YHLib
             
             m_rcvsocket.Bind(rcv_ep);
 
-            m_sndsocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+            //m_sndsocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             IPEndPoint snd_ep = new IPEndPoint(IPAddress.Any, src_sndport);
-            m_sndsocket.Bind(snd_ep);
+            //m_sndsocket.Bind(snd_ep);
+            m_udpc_send = new UdpClient(snd_ep);
 
             IPEndPoint sender = new IPEndPoint(IPAddress.Parse(dst_ip), dst_rcvport);
-            m_remote_sndep = (EndPoint)sender;
+            m_remote_sndep = (IPEndPoint)sender;
 
             IPEndPoint rcv = new IPEndPoint(IPAddress.Any, dst_sndport);
             m_remote_rcvep = (EndPoint)rcv;
@@ -205,7 +209,8 @@ namespace YHServer.YHLib
 
         private void SendTo(byte[] data, int data_len)
         {
-            m_sndsocket.SendTo(data, data_len, SocketFlags.None, m_remote_sndep);
+            //m_sndsocket.SendTo(data, data_len, SocketFlags.None, m_remote_sndep);
+            m_udpc_send.Send(data, data_len, m_remote_sndep);
         }
 
         public void LineEstablish()

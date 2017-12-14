@@ -83,11 +83,13 @@ void task_udpserver(void *p_arg)
 		pbuff = rcv_queue_dequeue(s_rcv_queue);
 		pbuff->len = recvfrom(sock_fd, pbuff->data, RCV_BUFFER_SIZE, 0, (struct sockaddr *)&g_remote_sin, &sin_len);
 		ret = parse_AT(pbuff->data, RCV_BUFFER_SIZE);
-		if(ret && is_line_established)
+		if(ret)
 		{
-			OSSemPost(sem_vs1053async);
+			pbuff->len = 0;
+			if(is_line_established)
+				OSSemPost(sem_vs1053async);
 		}
-
+		rcv_queue_enqueue(pbuff);
 		/*
 		for(i = 0; i < 1024; i++)
 		{
