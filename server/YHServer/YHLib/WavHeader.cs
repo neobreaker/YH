@@ -62,7 +62,7 @@ namespace YHServer
         {
             WavHeaderStruct wavhead = new WavHeaderStruct();
 
-            UInt32 data_sz = 4096*10;
+            UInt32 data_sz = 1024*1024;
             UInt32 riff_sz = data_sz + 36;
             
             wavhead.riff.ChunkID=0X46464952;

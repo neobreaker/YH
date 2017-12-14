@@ -35,7 +35,7 @@ namespace YHServer.YHLib
         private bool m_is_save = false;
 
         private FileStream m_rec_fs = null;
-        private bool m_is_rec_save = false;
+        private bool m_is_rec_save = true;
 
         private IWavePlayer m_wavePlayer = null;
         private BufferedWaveProvider m_wave_provider = null;
@@ -108,6 +108,7 @@ namespace YHServer.YHLib
             }
 
             m_dgram_queue.Clear();
+            m_queue_rec.Clear();
 
             LineEstablish();
 
@@ -136,11 +137,6 @@ namespace YHServer.YHLib
             m_is_line_rcv = false;
 
             StopRecording();
-            if (m_is_rec_save)
-            {
-                m_rec_fs.Flush();
-                m_rec_fs.Close();
-            }
 
             LineShutDown();
         }
@@ -198,6 +194,12 @@ namespace YHServer.YHLib
 
                     SendTo(e.m_data, e.m_len);
                 }
+            }
+            if (m_is_rec_save)
+            {
+                m_rec_fs.Flush();
+                m_rec_fs.Close();
+                m_rec_fs = null;
             }
         }
 
