@@ -5,14 +5,49 @@
 #include "lwip/err.h"
 #include "lib_mem.h"
 #include "task_udpserver.h"
+#include "queue.h"
 
 extern OS_EVENT* sem_vs1053async;
-
-static u8 data_buffer[RCV_BUFFER_SIZE];
 
 struct sockaddr_in g_remote_sin;
 
 u8 is_line_established = 0;		//通讯连接是否建立
+
+static rev_buffer_t s_rcv_buffer[RCV_BUFFER_NUM];
+static Queue *s_rcv_queue = NULL;
+
+static void rcv_queue_enqueue(void *data)
+{
+	if(queue_size(s_rcv_queue) == RCV_BUFFER_NUM)
+		queue_poll(s_rcv_queue, NULL);
+	
+	queue_enqueue(s_rcv_queue, data);
+}
+
+static void* rcv_queue_dequeue(void *data)
+{
+	void *ret = NULL;
+
+	queue_poll(s_rcv_queue, &ret);
+
+	return ret;
+}
+
+static void rev_buffer_init()
+{
+	int i = 0; 
+	
+	queue_new(&s_rcv_queue);
+	
+	for (i = 0; i < RCV_BUFFER_NUM; i++)
+	{
+		s_rcv_buffer[i].data = pvPortMalloc(RCV_BUFFER_SIZE);
+		if(s_rcv_buffer[i].data == NULL)
+			return;
+		rcv_queue_enqueue(&s_rcv_buffer[i]);
+		s_rcv_buffer[i].len = 0;
+	}
+}
 
 void task_udpserver(void *p_arg)
 {
@@ -21,6 +56,10 @@ void task_udpserver(void *p_arg)
 	socklen_t sin_len; 
 	int sock_fd;                /* server socked */
 	int ret = 0;
+	int len = 0;
+	rev_buffer_t *pbuff = NULL;
+	
+	rev_buffer_init();
 	
 	sock_fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock_fd == -1) 
@@ -41,8 +80,9 @@ void task_udpserver(void *p_arg)
 	
 	while(1)
 	{
-		recvfrom(sock_fd, data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&g_remote_sin, &sin_len);
-		ret = parse_AT(data_buffer, RCV_BUFFER_SIZE);
+		pbuff = rcv_queue_dequeue(s_rcv_queue);
+		pbuff->len = recvfrom(sock_fd, pbuff->data, RCV_BUFFER_SIZE, 0, (struct sockaddr *)&g_remote_sin, &sin_len);
+		ret = parse_AT(pbuff->data, RCV_BUFFER_SIZE);
 		if(ret && is_line_established)
 		{
 			OSSemPost(sem_vs1053async);

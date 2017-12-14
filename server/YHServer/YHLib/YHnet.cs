@@ -21,27 +21,31 @@ namespace YHServer.YHLib
         private EndPoint m_remote_rcvep = null;
         private EndPoint m_remote_sndep = null;
 
-        private bool m_is_line_connected = false;
+        private bool m_is_line_rcv = false;
+        private bool m_is_line_snd = false;
 
         private Thread m_thread_rcv;
         private byte[] m_rcv_buffer;
 
         private Thread m_thread_play;
+        private Thread m_thread_rec;
 
         // file
         private FileStream m_fs = null;
         private bool m_is_save = false;
 
         private FileStream m_rec_fs = null;
-        private bool m_is_rec_save = true;
+        private bool m_is_rec_save = false;
 
         private IWavePlayer m_wavePlayer = null;
         private BufferedWaveProvider m_wave_provider = null;
 
         private IWaveIn m_wave_in = null;
-        private WaveFileWriter m_wave_writer = null;
+        //private WaveFileWriter m_wave_writer = null;
 
         public  YHbuffer m_dgram_queue =  new YHbuffer(3);
+
+        public  YHbuffer m_queue_rec = new YHbuffer(3);
 
         private void YHnetSetup(string dst_ip, int dst_rcvport, int dst_sndport, int src_rcvport, int src_sndport)
         {
@@ -64,7 +68,6 @@ namespace YHServer.YHLib
 
             m_rcv_buffer = new Byte[4096];
 
-            
             WaveFormat wf = new WaveFormat(8000, 16, 1);
             m_wavePlayer = new WaveOut();
             m_wave_provider = new BufferedWaveProvider(wf);
@@ -108,7 +111,7 @@ namespace YHServer.YHLib
 
             LineEstablish();
 
-            m_is_line_connected = true;
+            m_is_line_rcv = true;
             m_thread_play = new Thread(ThreadDoPlay);
             m_thread_play.IsBackground = true;
             m_thread_play.Start();
@@ -116,11 +119,8 @@ namespace YHServer.YHLib
             m_wave_in = new WaveIn { WaveFormat = new WaveFormat(8000, 1) };//设置码率
             m_wave_in.DataAvailable += waveIn_DataAvailable;
             m_wave_in.RecordingStopped += OnRecordingStopped;
-
-            m_wave_writer = new WaveFileWriter("E:///REC/test.wav", m_wave_in.WaveFormat);
-
             m_wave_in.StartRecording();
-            
+
         }
 
         public void ShutDown()
@@ -133,7 +133,7 @@ namespace YHServer.YHLib
             }
             m_fs = null;
 
-            m_is_line_connected = false;
+            m_is_line_rcv = false;
 
             StopRecording();
             if (m_is_rec_save)
@@ -161,7 +161,7 @@ namespace YHServer.YHLib
         private void ThreadDoPlay()
         {
             YHElement e ;
-            while (m_is_line_connected)
+            while (m_is_line_rcv)
             {
                 e = m_dgram_queue.Dequeue();
                 if(e.m_len > 0)
@@ -171,6 +171,32 @@ namespace YHServer.YHLib
                         m_fs.Write(e.m_data, 0, e.m_len);
                     }
                     m_wave_provider.AddSamples(e.m_data, 0, e.m_len);
+                }
+            }
+        }
+
+        private void ThreadDoRec()
+        {
+            YHElement e;
+            while (m_is_line_snd)
+            {
+                e = m_queue_rec.Dequeue();
+                if (e.m_len > 0)
+                {
+                    if (m_is_rec_save)
+                    {
+                        DateTime dt = DateTime.Now;
+                        string path = "E:\\";
+                        string filename = string.Format("{0:yyMMdd HHmmss}", dt) + ".wav";
+
+                        if (m_rec_fs == null)
+                        {
+                            m_rec_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
+                        }
+                        m_rec_fs.Write(e.m_data, 0, e.m_len);
+                    }
+
+                    SendTo(e.m_data, e.m_len);
                 }
             }
         }
@@ -204,28 +230,22 @@ namespace YHServer.YHLib
 
         private void waveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-            DateTime dt = DateTime.Now;
-            string path = "E:\\";
-            string filename = string.Format("{0:yyMMdd HHmmss}", dt) + ".wav";
-
-            if (m_is_rec_save)
+            if (!m_is_line_snd)
             {
-                if (m_rec_fs == null)
-                {
-                    m_rec_fs = new FileStream(path + filename, FileMode.OpenOrCreate);
-                    WavHeader wh = new WavHeader();
-                    byte[] temp1 = wh.GetWavHeader();
-                    byte[] temp = new byte[44];
-                    Array.Copy(temp1, 0, temp, 0, temp1.Length);
-                    BinaryWriter bw = new BinaryWriter(m_rec_fs);
-                    bw.Write(temp);
-                    bw.Flush();
-                    
-                }
-                m_rec_fs.Write(e.Buffer, 0, e.BytesRecorded);
+                m_is_line_snd = true;
+                WavHeader wh = new WavHeader();
+                byte[] temp1 = wh.GetWavHeader();
+                byte[] temp = new byte[44];
+                Array.Copy(temp1, 0, temp, 0, temp1.Length);
+                m_queue_rec.Enqueue(temp, temp.Length);
+
+
+                m_thread_rec = new Thread(ThreadDoRec);
+                m_thread_rec.IsBackground = false;
+                m_thread_rec.Start();
+
             }
-            m_wave_writer.Write(e.Buffer, 0, e.BytesRecorded);
-            //int secondsRecorded = (int)(m_wave_writer.Length / m_wave_writer.WaveFormat.AverageBytesPerSecond);//录音时间获取
+            m_queue_rec.Enqueue(e.Buffer, e.BytesRecorded);
             
         }
 
@@ -236,14 +256,14 @@ namespace YHServer.YHLib
                 m_wave_in.Dispose();
                 m_wave_in = null;
             }
-
-            
+            m_is_line_snd = false;
+            /*
             if (m_wave_writer != null)//关闭文件流
             {
                 m_wave_writer.Close();
                 m_wave_writer = null;
             }
-            
+            */
         }
     }
 }
