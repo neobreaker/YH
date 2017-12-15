@@ -58,7 +58,7 @@ void vs10xx_play_xdcs(u8 stat)
     PCout(2) = stat;
 }
 
-void vs10xx_play_wait_dq()
+u8 vs10xx_play_wait_dq()
 {
     while(vs10xx_play_dq() == 0);
 }

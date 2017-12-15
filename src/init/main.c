@@ -15,6 +15,7 @@
 static OS_STK startup_task_stk[STARTUP_TASK_STK_SIZE];
 
 OS_EVENT* sem_vs1053async;			//TEST 
+OS_EVENT* sem_vs1053async;
 
 vs10xx_cfg_t g_vs10xx_rec_cfg;
 vs10xx_cfg_t g_vs10xx_play_cfg;

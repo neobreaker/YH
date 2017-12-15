@@ -301,6 +301,9 @@ u16 VS_Get_EndFillByte(vs10xx_cfg_t *cfg)
 u8 VS_Send_MusicData(vs10xx_cfg_t *cfg, u8* buf)
 {
     u8 n;
+
+	cfg->VS_WAIT_DQ();
+	
     if(cfg->VS_DQ() != 0)  //ËÍÊý¾Ý¸øVS10XX
     {
         cfg->VS_XDCS(0);

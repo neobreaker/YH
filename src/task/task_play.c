@@ -35,6 +35,7 @@ void play()
 			for(i = 0; i < len-32; i+=32)
 			{
 				VS_Send_MusicData(&g_vs10xx_play_cfg, pbuff+i);
+				
 			}
 			if(i < len)
 			{
