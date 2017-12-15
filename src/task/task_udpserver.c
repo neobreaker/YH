@@ -14,9 +14,9 @@ struct sockaddr_in g_remote_sin;
 u8 is_line_established = 0;		//通讯连接是否建立
 
 static rev_buffer_t s_rcv_buffer[RCV_BUFFER_NUM];
-static Queue *s_rcv_queue = NULL;
+Queue *s_rcv_queue = NULL;
 
-static void rcv_queue_enqueue(void *data)
+void rcv_queue_enqueue(void *data)
 {
 	if(queue_size(s_rcv_queue) == RCV_BUFFER_NUM)
 		queue_poll(s_rcv_queue, NULL);
@@ -24,7 +24,7 @@ static void rcv_queue_enqueue(void *data)
 	queue_enqueue(s_rcv_queue, data);
 }
 
-static void* rcv_queue_dequeue(void *data)
+void* rcv_queue_dequeue()
 {
 	void *ret = NULL;
 
@@ -80,7 +80,7 @@ void task_udpserver(void *p_arg)
 	
 	while(1)
 	{
-		pbuff = rcv_queue_dequeue(s_rcv_queue);
+		pbuff = rcv_queue_dequeue();
 		pbuff->len = recvfrom(sock_fd, pbuff->data, RCV_BUFFER_SIZE, 0, (struct sockaddr *)&g_remote_sin, &sin_len);
 		ret = parse_AT(pbuff->data, RCV_BUFFER_SIZE);
 		if(ret)

@@ -87,6 +87,7 @@ u16 VS_Get_HeadInfo(vs10xx_cfg_t *cfg);
 u32 VS_Get_ByteRate(vs10xx_cfg_t *cfg);
 u16 VS_Get_EndFillByte(vs10xx_cfg_t *cfg);
 u8 VS_Send_MusicData(vs10xx_cfg_t *cfg, u8* buf);
+u8 VS_Send_MusicData2(vs10xx_cfg_t *cfg, u8* buf, int len);
 void VS_Restart_Play(vs10xx_cfg_t *cfg);
 void VS_Reset_DecodeTime(vs10xx_cfg_t *cfg);
 u16 VS_Get_DecodeTime(vs10xx_cfg_t *cfg);

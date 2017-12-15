@@ -316,6 +316,24 @@ u8 VS_Send_MusicData(vs10xx_cfg_t *cfg, u8* buf)
     return 0;//成功发送了
 }
 
+u8 VS_Send_MusicData2(vs10xx_cfg_t *cfg, u8* buf, int len)	//len must less equal 32
+{
+    u8 n;
+    if(cfg->VS_DQ() != 0)  //送数据给VS10XX
+    {
+        cfg->VS_XDCS(0);
+        for(n=0; n<len; n++)
+        {
+            cfg->VS_SPI_ReadWriteByte(buf[n]);
+        }
+        cfg->VS_XDCS(1);
+    }
+    else 
+		return 1;
+	
+    return 0;//成功发送了
+}
+
 //切歌
 //通过此函数切歌，不会出现切换“噪声”
 void VS_Restart_Play(vs10xx_cfg_t *cfg)

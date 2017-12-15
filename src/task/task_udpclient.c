@@ -67,7 +67,7 @@ void task_udpclient(void *p_arg)
 			
             while(1)
             {
-
+				OSTimeDly(1);
 				w=VS_RD_Reg(&g_vs10xx_rec_cfg, SPI_HDAT1);
                 if((w>=256)&&(w<896))
                 {

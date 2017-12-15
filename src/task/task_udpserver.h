@@ -19,5 +19,7 @@ typedef struct
 
 void task_udpserver(void *p_arg);
 int parse_AT(u8* buffer, int len);
+void* rcv_queue_dequeue(void);
+void rcv_queue_enqueue(void *data);
 
 #endif

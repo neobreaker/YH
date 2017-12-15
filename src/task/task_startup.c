@@ -1,14 +1,17 @@
 #include "ucos_ii.h"
 #include "stm32f10x.h"
 #include "task_startup.h"
+#include "lwip_comm.h"
 
-static OS_STK task_tcpserver_stk[TASK_TCPSERVER_STK_SIZE];
+//static OS_STK task_tcpserver_stk[TASK_TCPSERVER_STK_SIZE];
 static OS_STK task_udpserver_stk[TASK_TCPSERVER_STK_SIZE];
 static OS_STK task_udpclient_stk[TASK_UDPCLIENT_STK_SIZE];
+static OS_STK task_play_stk[TASK_PLAY_STK_SIZE];
 
 extern void task_tcpserver(void *p_arg);
 extern void task_udpserver(void *p_arg);
 extern void task_udpclient(void *p_arg);
+extern void task_play(void *p_arg);
 
 static void systick_init(void)
 {
@@ -39,6 +42,9 @@ void startup_task(void *p_arg)
 	
 	err |= OSTaskCreate(task_udpclient, (void *)0,
 	                   &task_udpclient_stk[TASK_UDPCLIENT_STK_SIZE-1], TASK_UDPCLIENT_PRIO);  
+
+	err |= OSTaskCreate(task_play, (void *)0,
+	                   &task_play_stk[TASK_PLAY_STK_SIZE-1], TASK_PLAY_PRIO);  
 	
 	if (OS_ERR_NONE != err)
 		while(1)
