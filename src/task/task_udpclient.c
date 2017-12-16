@@ -48,13 +48,13 @@ void task_udpclient(void *p_arg)
         return ;
     }
 
-	//recoder_enter_rec_mode(&g_vs10xx_rec_cfg, 1024*4);
-	//while(VS_RD_Reg(&g_vs10xx_rec_cfg, SPI_HDAT1)>>8);
+	recoder_enter_rec_mode(&g_vs10xx_rec_cfg, 1024*4);
+	while(VS_RD_Reg(&g_vs10xx_rec_cfg, SPI_HDAT1)>>8);
     while(1)
     {
         OSSemPend(sem_vs1053async, 0, &_err);
 		OSTimeDly(200);
-		/*
+		
         if(_err == OS_ERR_NONE)
         {
             sin.sin_addr.s_addr = g_remote_sin.sin_addr.s_addr;
@@ -65,7 +65,7 @@ void task_udpclient(void *p_arg)
 			
 			wav_header_init(&wav_header, cnt*512+36, cnt*512);
 			
-			//sendto(sock_fd, &wav_header, sizeof(wav_header), 0, (struct sockaddr *)&sin, sizeof(sin));
+			sendto(sock_fd, &wav_header, sizeof(wav_header), 0, (struct sockaddr *)&sin, sizeof(sin));
 			
             while(1)
             {
@@ -74,6 +74,8 @@ void task_udpclient(void *p_arg)
                 if((w>=256)&&(w<896))
                 {
                     idx=0;
+					OSTimeDly(6);
+					/*
                     while(idx<512)  //一次读取512字节
                     {
                         w=VS_RD_Reg(&g_vs10xx_rec_cfg, SPI_HDAT0);
@@ -81,7 +83,7 @@ void task_udpclient(void *p_arg)
                         snddata[idx++]=w>>8;
                     }
                     //sendto(sock_fd, snddata, 512, 0, (struct sockaddr *)&sin, sizeof(sin));
-
+                    */
                 }
 			
 
@@ -91,7 +93,7 @@ void task_udpclient(void *p_arg)
             time_elapse = OSTimeGet() - time_stamp;
             time_elapse = 0;
         }
-        */
+        
     }
 }
 
