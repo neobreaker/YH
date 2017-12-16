@@ -61,6 +61,7 @@ void vs10xx_play_xdcs(u8 stat)
 u8 vs10xx_play_wait_dq()
 {
     while(vs10xx_play_dq() == 0);
+	return 0;
 }
 
 void vs10xx_play_spi_init(void)

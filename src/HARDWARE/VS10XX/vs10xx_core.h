@@ -3,6 +3,8 @@
 
 #include "stm32f10x.h"
 
+#define SEND_NUM_PER_FRAME		80
+
 typedef struct
 {
     void (*VS_Init)(void);
