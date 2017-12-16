@@ -53,7 +53,6 @@ void task_udpclient(void *p_arg)
     while(1)
     {
         OSSemPend(sem_vs1053async, 0, &_err);
-		OSTimeDly(200);
 		
         if(_err == OS_ERR_NONE)
         {
