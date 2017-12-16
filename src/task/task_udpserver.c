@@ -8,6 +8,7 @@
 #include "queue.h"
 
 extern OS_EVENT* sem_vs1053async;
+extern OS_EVENT* sem_vs1053_play_async;
 
 struct sockaddr_in g_remote_sin;
 
@@ -87,7 +88,10 @@ void task_udpserver(void *p_arg)
 		{
 			pbuff->len = 0;
 			if(is_line_established)
+			{
 				OSSemPost(sem_vs1053async);
+				OSSemPost(sem_vs1053_play_async);
+			}
 		}
 		rcv_queue_enqueue(pbuff);
 		/*

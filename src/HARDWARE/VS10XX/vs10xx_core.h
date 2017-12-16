@@ -9,7 +9,7 @@ typedef struct
     u8   (*VS_SPI_ReadWriteByte)(u8 TxData);
     void (*VS_SPI_SpeedLow)(void);
     void (*VS_SPI_SpeedHigh)(void);
-    void (*VS_WAIT_DQ)(void);
+    u8   (*VS_WAIT_DQ)(void);
     u8   (*VS_DQ)(void);
     void (*VS_RST)(u8 stat);
     void (*VS_XCS)(u8 stat);

@@ -61,7 +61,7 @@ void vs10xx_xdcs(u8 stat)
     PFout(6) = stat;
 }
 
-void vs10xx_wait_dq()
+u8 vs10xx_wait_dq()
 {
     while(vs10xx_dq() == 0);
 }

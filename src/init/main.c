@@ -15,6 +15,7 @@
 static OS_STK startup_task_stk[STARTUP_TASK_STK_SIZE];
 
 OS_EVENT* sem_vs1053async;			//TEST 
+OS_EVENT* sem_vs1053_play_async;
 
 vs10xx_cfg_t g_vs10xx_rec_cfg;
 vs10xx_cfg_t g_vs10xx_play_cfg;
@@ -41,7 +42,8 @@ int main(void)
 
 	CC_DEBUGF(CC_DBG_ON | CC_DBG_LEVEL_WARNING, "system booting\n");
 
-    sem_vs1053async 	= OSSemCreate(0);
+    sem_vs1053async 		= OSSemCreate(0);
+	sem_vs1053_play_async	= OSSemCreate(0);
 	
 	OSTaskCreate(startup_task, (void *)0,
 	             &startup_task_stk[STARTUP_TASK_STK_SIZE - 1],
