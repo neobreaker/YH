@@ -142,7 +142,7 @@ namespace YHServer.YHLib
 
             StopRecording();
 
-            LineShutDown();
+            
         }
 
         private void ThreadDoRecv()
@@ -199,6 +199,12 @@ namespace YHServer.YHLib
                     SendTo(e.m_data, e.m_len);
                 }
             }
+            for(int i = 0; i < 3; i++)
+            {
+                Thread.Sleep(500);
+                LineShutDown();
+            }
+            
             if (m_is_rec_save)
             {
                 m_rec_fs.Flush();
