@@ -73,16 +73,16 @@ void task_udpclient(void *p_arg)
                 if((w>=256)&&(w<896))
                 {
                     idx=0;
-					OSTimeDly(6);
-					/*
+					//OSTimeDly(6);
+					
                     while(idx<512)  //一次读取512字节
                     {
                         w=VS_RD_Reg(&g_vs10xx_rec_cfg, SPI_HDAT0);
                         snddata[idx++]=w&0XFF;
                         snddata[idx++]=w>>8;
                     }
-                    //sendto(sock_fd, snddata, 512, 0, (struct sockaddr *)&sin, sizeof(sin));
-                    */
+                    sendto(sock_fd, snddata, 512, 0, (struct sockaddr *)&sin, sizeof(sin));
+                    
                 }
 			
 

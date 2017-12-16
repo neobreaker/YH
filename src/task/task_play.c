@@ -69,7 +69,8 @@ void play()
 					
                     memcpy(pbuff, prcv_buff->data, len);
                     g_vs10xx_play_cfg.VS_SPI_SpeedHigh();   //高速
-                    vs10xx_send_data(pbuff, len);
+                    //vs10xx_send_data(pbuff, len);
+                    OSTimeDly(10);
                 }
 
 				if(!is_line_established)			//通讯中断
