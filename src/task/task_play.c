@@ -42,14 +42,14 @@ void vs10xx_play_dma_send_data(u8* pbuff, int len)
 			vs10xx_play_dma_enable(SEND_NUM_PER_FRAME);
 			
 		}
-		OSTimeDly(1);
-		pro=DMA_GetCurrDataCounter(DMA1_Channel4);
+		OSTimeDly(2);
+		pro=DMA_GetCurrDataCounter(VS10XX_PLAY_DMA_CHx);
 		g_vs10xx_play_cfg.VS_XDCS(1);
     }
     if(i < len)
     {
         memcpy(vs10xx_play_dma_buff, pbuff+i, len -i);
-		OSTimeDly(1);
+		OSTimeDly(2);
     }
 }
 

@@ -3,7 +3,7 @@
 
 #include "stm32f10x.h"
 
-#define SEND_NUM_PER_FRAME		80
+#define SEND_NUM_PER_FRAME		160
 
 typedef struct
 {
