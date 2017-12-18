@@ -538,20 +538,20 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
     u32 rxstat;
     u32 len;
     u8 err = OS_ERR_NONE;
+	u16 retry = 0;
 //    u8 reg = 0;
     OSSemPend(sem_enc28j60lock, 0, &err);
     if(err == OS_ERR_NONE)
     {
-        ptk_cnt = ENC28J60_Read(EPKTCNT);
+        
+		estat = ENC28J60_Read(ESTAT);
+		eir = ENC28J60_Read(EIR);
+		econ1 = ENC28J60_Read(ECON1);
+		
+		ptk_cnt = ENC28J60_Read(EPKTCNT);
         if(ptk_cnt == 0)                        //是否收到数据包
         {
-			
-            estat = ENC28J60_Read(ESTAT);
-            eir = ENC28J60_Read(EIR);
-            econ1 = ENC28J60_Read(ECON1);
-
-			
-            if((!(econ1 & ECON1_RXEN) && (estat & ESTAT_CLKRDY)) || ((eir*EIR_RXERIF) && (estat & ESTAT_BUFFER)))
+			if((!(econ1 & ECON1_RXEN) && (estat & ESTAT_CLKRDY)) || ((eir*EIR_RXERIF) && (estat & ESTAT_BUFFER)))
             {
 				ENC28J60_Init(g_enc28j60_mac);
 				estat = ENC28J60_Read(ESTAT);
@@ -563,6 +563,16 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
             OSSemPost(sem_enc28j60lock);
             return 0;
         }
+		
+		do
+        {
+	        retry++;
+            if(retry > 200)
+            {
+                OSSemPost(sem_enc28j60lock);
+                return 0;
+            }
+        }while((econ1&ECON1_TXRTS | econ1&ECON1_DMAST) | (estat&ESTAT_RXBUSY));
 
         ENC28J60_Write(ERDPTL,(NextPacketPtr));             //设置接收缓冲器读指针
         ENC28J60_Write(ERDPTH,(NextPacketPtr)>>8);
