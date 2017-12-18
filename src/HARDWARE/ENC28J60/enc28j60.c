@@ -551,7 +551,7 @@ u32 ENC28J60_Packet_Receive(u32 maxlen,u8* packet)
             econ1 = ENC28J60_Read(ECON1);
 
 			
-            if(!(econ1 & ECON1_RXEN) && (estat & ESTAT_CLKRDY))
+            if((!(econ1 & ECON1_RXEN) && (estat & ESTAT_CLKRDY)) || ((eir*EIR_RXERIF) && (estat & ESTAT_BUFFER)))
             {
 				ENC28J60_Init(g_enc28j60_mac);
 				estat = ENC28J60_Read(ESTAT);

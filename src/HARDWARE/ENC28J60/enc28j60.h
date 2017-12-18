@@ -159,6 +159,7 @@
 #define EIR_RXERIF       0x01
 // ENC28J60 ESTAT Register Bit Definitions
 #define ESTAT_INT        0x80
+#define ESTAT_BUFFER     0x40
 #define ESTAT_LATECOL    0x10
 #define ESTAT_RXBUSY     0x04
 #define ESTAT_TXABRT     0x02
