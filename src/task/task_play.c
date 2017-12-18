@@ -28,7 +28,6 @@ void vs10xx_send_data(u8* pbuff, int len)
     }
 }
 
-u16 pro = 0;
 void vs10xx_play_dma_send_data(u8* pbuff, int len)
 {
 	int i = 0;
@@ -43,12 +42,17 @@ void vs10xx_play_dma_send_data(u8* pbuff, int len)
 			
 		}
 		OSTimeDly(2);
-		pro=DMA_GetCurrDataCounter(VS10XX_PLAY_DMA_CHx);
 		g_vs10xx_play_cfg.VS_XDCS(1);
     }
     if(i < len)
     {
         memcpy(vs10xx_play_dma_buff, pbuff+i, len -i);
+		if(g_vs10xx_play_cfg.VS_DQ() != 0)  //ËÍÊý¾Ý¸øVS10XX
+    	{
+	        g_vs10xx_play_cfg.VS_XDCS(0);
+			SPI_I2S_DMACmd(SPI3, SPI_I2S_DMAReq_Tx, ENABLE);
+			vs10xx_play_dma_enable(len -i);
+		}
 		OSTimeDly(2);
     }
 }
@@ -76,7 +80,7 @@ void play()
 
         if(_err == OS_ERR_NONE)
         {
-
+			
             while(1)
             {
                 prcv_buff = rcv_queue_dequeue();

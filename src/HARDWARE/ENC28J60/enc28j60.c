@@ -185,7 +185,6 @@ void ENC28J60_Reset(void)
 {
 
     ENC28J60_SPI2_Init();//SPI2初始化
-    enc28j60_tx_dma_init((u32)&SPI2->DR, (u32)enc28j60_tx_dma_buff);
     SPI2_SetSpeed(SPI_BaudRatePrescaler_4); //SPI2 SCK频率为36M/4=9Mhz
     ENC28J60_RST=0;         //复位ENC28J60
     delay_ms(10);
@@ -249,20 +248,30 @@ void ENC28J60_Write_Buf(u32 len,u8* data)
 {
     ENC28J60_CS=0;
     SPI2_ReadWriteByte(ENC28J60_WRITE_BUF_MEM);
+
+	//enc28j60_tx_dma_init((u32)&SPI2->DR, (u32)enc28j60_tx_dma_buff);
+	//memcpy(enc28j60_tx_dma_buff, data, len);
+	//SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Tx, ENABLE);
+	//enc28j60_tx_dma_enable(len);
+
+	
     while(len)
     {
         len--;
         SPI2_ReadWriteByte(*data);
         data++;
     }
+    
     ENC28J60_CS=1;
 }
-/*void ENC28J60_Write_Buf(u32 len,u8* data)
+/*
+void ENC28J60_Write_Buf(u32 len,u8* data)
 {
 	u16 cnt = 0;
     ENC28J60_CS=0;
     SPI2_ReadWriteByte(ENC28J60_WRITE_BUF_MEM);
 
+    enc28j60_tx_dma_init((u32)&SPI2->DR, (u32)enc28j60_tx_dma_buff);
 	memcpy(enc28j60_tx_dma_buff, data, len);
 	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Tx, ENABLE);
 	enc28j60_tx_dma_enable(len);
@@ -273,7 +282,8 @@ void ENC28J60_Write_Buf(u32 len,u8* data)
 	}while(cnt != 0);
 			
     ENC28J60_CS=1;
-}*/
+}
+*/
 //设置ENC28J60寄存器Bank
 //ban:要设置的bank
 void ENC28J60_Set_Bank(u8 bank)
