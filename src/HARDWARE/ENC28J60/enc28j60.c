@@ -151,15 +151,48 @@ void EXTI9_5_IRQHandler(void)
     OSIntExit();
 }
 
+static u8 enc28j60_tx_dma_buff[1500];
+void enc28j60_tx_dma_init(u32 cpar, u32 cmar)
+{
+	DMA_InitTypeDef DMA_InitStructure;
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);	//使能DMA传输
+	
+	DMA_DeInit(DMA1_Channel5);   //将DMA的通道1寄存器重设为缺省值
+
+	DMA_InitStructure.DMA_PeripheralBaseAddr = cpar;  //DMA外设基地址
+	DMA_InitStructure.DMA_MemoryBaseAddr = cmar;  //DMA内存基地址
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;  //数据传输方向，从内存读取发送到外设
+	DMA_InitStructure.DMA_BufferSize = 0;  //DMA通道的DMA缓存的大小
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;  //外设地址寄存器不变
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;  //内存地址寄存器递增
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;  //数据宽度为8位
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte; //数据宽度为8位
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;  //工作在正常模式
+	DMA_InitStructure.DMA_Priority = DMA_Priority_Medium; //DMA通道 x拥有中优先级 
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;  //DMA通道x没有设置为内存到内存传输
+	DMA_Init(DMA1_Channel5, &DMA_InitStructure);  //根据DMA_InitStruct中指定的参数初始化DMA的通道USART1_Tx_DMA_Channel所标识的寄存器
+}
+
+//开启一次DMA传输
+void enc28j60_tx_dma_enable(u16 cndtr)
+{ 
+	DMA_Cmd(DMA1_Channel5, DISABLE );  //关闭 所指示的通道      
+ 	DMA_SetCurrDataCounter(DMA1_Channel5, cndtr);//DMA通道的DMA缓存的大小
+ 	DMA_Cmd(DMA1_Channel5, ENABLE);  //使能 所指示的通道 
+}
+
 void ENC28J60_Reset(void)
 {
 
     ENC28J60_SPI2_Init();//SPI2初始化
+    enc28j60_tx_dma_init((u32)&SPI2->DR, (u32)enc28j60_tx_dma_buff);
     SPI2_SetSpeed(SPI_BaudRatePrescaler_4); //SPI2 SCK频率为36M/4=9Mhz
     ENC28J60_RST=0;         //复位ENC28J60
     delay_ms(10);
     ENC28J60_RST=1;         //复位结束
     delay_ms(10);
+	
+	
 }
 //读取ENC28J60寄存器(带操作码)
 //op：操作码
@@ -224,6 +257,23 @@ void ENC28J60_Write_Buf(u32 len,u8* data)
     }
     ENC28J60_CS=1;
 }
+/*void ENC28J60_Write_Buf(u32 len,u8* data)
+{
+	u16 cnt = 0;
+    ENC28J60_CS=0;
+    SPI2_ReadWriteByte(ENC28J60_WRITE_BUF_MEM);
+
+	memcpy(enc28j60_tx_dma_buff, data, len);
+	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Tx, ENABLE);
+	enc28j60_tx_dma_enable(len);
+
+	do
+	{
+		cnt = DMA_GetCurrDataCounter(DMA1_Channel5);
+	}while(cnt != 0);
+			
+    ENC28J60_CS=1;
+}*/
 //设置ENC28J60寄存器Bank
 //ban:要设置的bank
 void ENC28J60_Set_Bank(u8 bank)
