@@ -37,7 +37,7 @@ namespace YHServer.YHLib
         private bool m_is_save = false;
 
         private FileStream m_rec_fs = null;
-        private bool m_is_rec_save = true;
+        private bool m_is_rec_save = false;
 
         private IWavePlayer m_wavePlayer = null;
         private BufferedWaveProvider m_wave_provider = null;
@@ -258,7 +258,10 @@ namespace YHServer.YHLib
                 m_thread_rec.Start();
 
             }
-            m_queue_rec.Enqueue(e.Buffer, e.BytesRecorded);
+            m_queue_rec.Enqueue(e.Buffer, 800);
+            m_queue_rec.Enqueue(e.Buffer.Skip(800).Take(800).ToArray(), 800);
+            
+            
             
         }
 
