@@ -307,7 +307,7 @@ u8 VS_Send_MusicData(vs10xx_cfg_t *cfg, u8* buf)
     if(cfg->VS_DQ() != 0)  //送数据给VS10XX
     {
         cfg->VS_XDCS(0);
-        for(n=0; n<32; n++)
+        for(n = 0; n < SEND_NUM_PER_FRAME; n++)
         {
             cfg->VS_SPI_ReadWriteByte(buf[n]);
         }
@@ -325,7 +325,7 @@ u8 VS_Send_MusicData2(vs10xx_cfg_t *cfg, u8* buf, int len)	//len must less equal
     if(cfg->VS_DQ() != 0)  //送数据给VS10XX
     {
         cfg->VS_XDCS(0);
-        for(n=0; n<len; n++)
+        for(n = 0; n < len; n++)
         {
             cfg->VS_SPI_ReadWriteByte(buf[n]);
         }

@@ -1,7 +1,7 @@
 #include "ucos_ii.h"
 #include "stm32f10x.h"
 #include "task_startup.h"
-#include "vs10xx_port.h"
+#include "vs10xx_play_port.h"
 #include "task_udpserver.h"
 #include "task_play.h"
 #include "queue.h"
@@ -12,17 +12,48 @@ extern vs10xx_cfg_t g_vs10xx_play_cfg;
 extern OS_EVENT* sem_vs1053_play_async;
 extern u8 is_line_established;
 
+u8 vs10xx_play_dma_buff[SEND_NUM_PER_FRAME];
+
 void vs10xx_send_data(u8* pbuff, int len)
 {
 	int i = 0;
-	for(i = 0; i < len-32; i+=32)
+	for(i = 0; i < len-SEND_NUM_PER_FRAME; i+=SEND_NUM_PER_FRAME)
     {
         VS_Send_MusicData(&g_vs10xx_play_cfg, pbuff+i);
-
+		
     }
     if(i < len)
     {
         VS_Send_MusicData2(&g_vs10xx_play_cfg, pbuff+i, len -i);
+    }
+}
+
+void vs10xx_play_dma_send_data(u8* pbuff, int len)
+{
+	int i = 0;
+	for(i = 0; i < len-SEND_NUM_PER_FRAME; i+=SEND_NUM_PER_FRAME)
+    {
+        memcpy(vs10xx_play_dma_buff, pbuff+i, SEND_NUM_PER_FRAME);
+		if(g_vs10xx_play_cfg.VS_DQ() != 0)  //送数据给VS10XX
+    	{
+	        g_vs10xx_play_cfg.VS_XDCS(0);
+			SPI_I2S_DMACmd(SPI3, SPI_I2S_DMAReq_Tx, ENABLE);
+			vs10xx_play_dma_enable(SEND_NUM_PER_FRAME);
+			
+		}
+		OSTimeDly(2);
+		g_vs10xx_play_cfg.VS_XDCS(1);
+    }
+    if(i < len)
+    {
+        memcpy(vs10xx_play_dma_buff, pbuff+i, len -i);
+		if(g_vs10xx_play_cfg.VS_DQ() != 0)  //送数据给VS10XX
+    	{
+	        g_vs10xx_play_cfg.VS_XDCS(0);
+			SPI_I2S_DMACmd(SPI3, SPI_I2S_DMAReq_Tx, ENABLE);
+			vs10xx_play_dma_enable(len -i);
+		}
+		OSTimeDly(2);
     }
 }
 
@@ -49,7 +80,7 @@ void play()
 
         if(_err == OS_ERR_NONE)
         {
-
+			
             while(1)
             {
                 prcv_buff = rcv_queue_dequeue();
@@ -69,7 +100,8 @@ void play()
 					
                     memcpy(pbuff, prcv_buff->data, len);
                     g_vs10xx_play_cfg.VS_SPI_SpeedHigh();   //高速
-                    vs10xx_send_data(pbuff, len);
+                    vs10xx_play_dma_send_data(pbuff, len);
+                    
                 }
 
 				if(!is_line_established)			//通讯中断
